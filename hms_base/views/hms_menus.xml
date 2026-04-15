@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_hms_root"
+              name="Hospital"
+              sequence="70"/>
+
+    <menuitem id="menu_hms_configuration"
+              name="Configuration"
+              parent="menu_hms_root"
+              sequence="90"
+              groups="hms_base.group_hms_manager"/>
+
+    <menuitem id="menu_hms_specialization"
+              name="Specializations"
+              parent="menu_hms_configuration"
+              action="action_hms_specialization"
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="specialization_general_medicine" model="hms.specialization">
+        <field name="name">General Medicine</field>
+        <field name="code">GM</field>
+        <field name="description">Primary care for adults.</field>
+    </record>
+    <record id="specialization_pediatrics" model="hms.specialization">
+        <field name="name">Pediatrics</field>
+        <field name="code">PED</field>
+        <field name="description">Medical care of infants, children and adolescents.</field>
+    </record>
+    <record id="specialization_cardiology" model="hms.specialization">
+        <field name="name">Cardiology</field>
+        <field name="code">CARD</field>
+        <field name="description">Disorders of the heart and cardiovascular system.</field>
+    </record>
+    <record id="specialization_obgyn" model="hms.specialization">
+        <field name="name">Obstetrics &amp; Gynecology</field>
+        <field name="code">OBGYN</field>
+        <field name="description">Pregnancy, childbirth, and the female reproductive system.</field>
+    </record>
+    <record id="specialization_orthopedics" model="hms.specialization">
+        <field name="name">Orthopedics</field>
+        <field name="code">ORTHO</field>
+        <field name="description">Musculoskeletal system disorders.</field>
+    </record>
+    <record id="specialization_dermatology" model="hms.specialization">
+        <field name="name">Dermatology</field>
+        <field name="code">DERM</field>
+        <field name="description">Skin, hair, and nail conditions.</field>
+    </record>
+</odoo>

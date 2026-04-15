@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_hms_base" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.hms_base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//notebook" position="inside">
+                <page string="Medical" name="hms_medical">
+                    <group>
+                        <field name="is_patient"/>
+                    </group>
+                    <group invisible="not is_patient">
+                        <group string="Demographics">
+                            <field name="date_of_birth"/>
+                            <field name="age" readonly="1"/>
+                            <field name="gender"/>
+                            <field name="blood_group"/>
+                        </group>
+                        <group string="Guardians">
+                            <field name="guardian_ids" widget="many2many_tags" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_inherit_hms_base" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.hms_base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="Patients" name="filter_is_patient" domain="[('is_patient', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_hms_base" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.hms_base</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_patients"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-users"
+                        invisible="not is_doctor">
+                    <field name="patient_count" widget="statinfo" string="Patients"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Medical" name="hms_medical">
+                    <group>
+                        <group>
+                            <field name="is_doctor"/>
+                            <field name="is_nurse"/>
+                        </group>
+                        <group invisible="not (is_doctor or is_nurse)">
+                            <field name="specialization_id"/>
+                            <field name="license_no"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_filter_inherit_hms_base" model="ir.ui.view">
+        <field name="name">hr.employee.search.inherit.hms_base</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="Doctors" name="filter_is_doctor" domain="[('is_doctor', '=', True)]"/>
+                <filter string="Nurses" name="filter_is_nurse" domain="[('is_nurse', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
