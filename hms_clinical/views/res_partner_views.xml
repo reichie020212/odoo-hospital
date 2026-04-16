@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_hms_clinical" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.hms_clinical</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Consultation smart button -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_consultations" type="object"
+                        class="oe_stat_button" icon="fa-stethoscope"
+                        invisible="not is_patient">
+                    <field name="consultation_count" widget="statinfo" string="Consultations"/>
+                </button>
+            </xpath>
+            <!-- Medical History page after the Medical page from hms_base -->
+            <xpath expr="//page[@name='hms_medical']" position="after">
+                <page string="Medical History" name="hms_medical_history"
+                      invisible="not is_patient">
+                    <field name="consultation_ids" readonly="1">
+                        <list>
+                            <field name="date"/>
+                            <field name="name"/>
+                            <field name="doctor_id"/>
+                            <field name="diagnosis"/>
+                            <field name="state" widget="badge"
+                                   decoration-info="state == 'draft'"
+                                   decoration-primary="state == 'in_progress'"
+                                   decoration-success="state == 'done'"
+                                   decoration-danger="state == 'cancelled'"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

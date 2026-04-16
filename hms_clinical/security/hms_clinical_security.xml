@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============================================================
+         Record rules for hms.consultation.
+         Goal (from Gemini H1 refinement):
+           - READ:   any HMS user can read ALL consultations (clinical continuity).
+           - WRITE/CREATE: doctors write/create only their own consultations.
+           - UNLINK: managers only.
+         ============================================================ -->
+
+    <!-- 1. All HMS users can READ any consultation -->
+    <record id="rule_consultation_read_all" model="ir.rule">
+        <field name="name">HMS: read all consultations</field>
+        <field name="model_id" ref="model_hms_consultation"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hms_base.group_hms_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- 2. HMS users can WRITE/CREATE only their own consultations -->
+    <record id="rule_consultation_write_own" model="ir.rule">
+        <field name="name">HMS: write own consultations</field>
+        <field name="model_id" ref="model_hms_consultation"/>
+        <field name="domain_force">[('doctor_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('hms_base.group_hms_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- 3. HMS users cannot UNLINK consultations (always-false domain) -->
+    <record id="rule_consultation_no_unlink_user" model="ir.rule">
+        <field name="name">HMS: users cannot delete consultations</field>
+        <field name="model_id" ref="model_hms_consultation"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hms_base.group_hms_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- 4. Managers have FULL access (OR'd with the user-level rules above) -->
+    <record id="rule_consultation_manager_full" model="ir.rule">
+        <field name="name">HMS: managers full access to consultations</field>
+        <field name="model_id" ref="model_hms_consultation"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hms_base.group_hms_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

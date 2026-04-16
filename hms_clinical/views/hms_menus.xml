@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_hms_patient"
+              name="Patients"
+              parent="hms_base.menu_hms_root"
+              action="action_hms_patient"
+              sequence="10"/>
+
+    <menuitem id="menu_hms_consultation"
+              name="Consultations"
+              parent="hms_base.menu_hms_root"
+              action="action_hms_consultation"
+              sequence="30"/>
+</odoo>
