@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Hospital Management System custom module for **Odoo 19 Community Edition**.
 
-This is an early-stage scaffold — at time of writing, no Odoo addon modules exist yet. The repo currently contains only Python tooling config and a placeholder `main.py`. Expect to create the first addon from scratch; do not assume module files already exist.
+The first module (`hms_base`) has been scaffolded and provides patient/staff extensions on `res.partner` and `hr.employee`, plus the `hms.specialization` master model and Hospital security groups. Further modules (`hms_appointment`, `hms_clinical`, `hms_billing`) are planned as part of the MVP.
 
 The parent directory is `~/odoo/custom_addons/`, meaning this repo is intended to live inside Odoo's custom addons path. Each Odoo module added here should be a sibling directory with its own `__manifest__.py` and `__init__.py`.
 
@@ -29,7 +29,8 @@ Work on this project is split between Gemini and Claude:
 3. **Tooling is mandatory.** After writing or modifying Python, run both `uv run ruff check . --fix` and `uv run ruff format .` before committing — in that order. Fix any remaining issues manually and re-run until clean. For XML changes, pre-commit's `check-xml` validates on commit; don't skip hooks.
 4. **Git protocol.** Once a component is built and lints clean, stage and commit with a descriptive, semantic commit message using a conventional-commits prefix (`feat:`, `fix:`, `refactor:`, `chore:`, `docs:`, `test:`). Always sign with both `-s` and `-S` (see the Git commits section below). No self-attribution.
 5. **Fail fast.** If a shell command fails with a non-obvious error, or Odoo returns a traceback you cannot resolve in one focused attempt, stop and report the error to Red with the full output so the Architect can be consulted. Do not silently retry, disable checks (`--no-verify`, commenting out tests), or hack around the error.
-6. **Prefer Odoo CE base modules — don't reinvent them.** This is a Community-Edition project: lean on Odoo's stock, bundled modules as the substrate for features wherever possible. Common reuse targets include `stock` (medical supplies, medicine inventory, equipment), `product` (medicines and procedures as products), `event` / `event_sale` (training sessions, vaccination drives, classes), `hr` (doctors, nurses, staff), `calendar` (appointment scheduling), `account` (billing, invoicing), `sale` / `purchase` (patient billing, supplier procurement), `mail` (chatter, notifications, activities on patient/appointment records), `portal` (patient self-service), and `base` / `contacts` (patients and guardians as `res.partner`). In practice this means: (a) when the Blueprint depends on a base module, list it in `__manifest__.py`'s `depends` and inherit/extend existing models (e.g. `_inherit = "res.partner"`) rather than creating parallel ones; (b) if the Blueprint defines a model or field that duplicates functionality Odoo CE already provides, stop and re-consult Gemini via `/ask gemini` before implementing — flag it as a potential reuse opportunity rather than silently coding the duplicate.
+6. **Every change must have a test case.** Every improvement, addition, or change to a module must include corresponding Odoo test(s) covering the new/modified behaviour. Tests live in `tests/` inside each module, inherit from `odoo.tests.common.TransactionCase` (or `HttpCase` for UI/controller tests), and are wired through `tests/__init__.py`. The test file must be named `test_<feature>.py`. Run the module's tests locally before committing: `odoo-bin -d <db> -i <module> --test-enable --stop-after-init`. Do not skip or weaken tests to make them pass — fix the code instead.
+7. **Prefer Odoo CE base modules — don't reinvent them.** This is a Community-Edition project: lean on Odoo's stock, bundled modules as the substrate for features wherever possible. Common reuse targets include `stock` (medical supplies, medicine inventory, equipment), `product` (medicines and procedures as products), `event` / `event_sale` (training sessions, vaccination drives, classes), `hr` (doctors, nurses, staff), `calendar` (appointment scheduling), `account` (billing, invoicing), `sale` / `purchase` (patient billing, supplier procurement), `mail` (chatter, notifications, activities on patient/appointment records), `portal` (patient self-service), and `base` / `contacts` (patients and guardians as `res.partner`). In practice this means: (a) when the Blueprint depends on a base module, list it in `__manifest__.py`'s `depends` and inherit/extend existing models (e.g. `_inherit = "res.partner"`) rather than creating parallel ones; (b) if the Blueprint defines a model or field that duplicates functionality Odoo CE already provides, stop and re-consult Gemini via `/ask gemini` before implementing — flag it as a potential reuse opportunity rather than silently coding the duplicate.
 
 **Workflow**
 1. Red consults Gemini → receives a Blueprint.
@@ -68,7 +69,17 @@ uv run pre-commit run ruff --files <path>
 uv run pre-commit run ruff-format --files <path>
 ```
 
-No tests exist yet and no test runner is configured — when adding tests for Odoo modules, they'll run via Odoo's own test harness (`odoo-bin -i <module> --test-enable --stop-after-init`), not pytest against this repo.
+Tests run via Odoo's own test harness, **not** pytest:
+
+```bash
+# Run a module's tests (requires a running Odoo database)
+odoo-bin -d <db> -i <module> --test-enable --stop-after-init
+
+# Run tests for a specific tag
+odoo-bin -d <db> -i <module> --test-enable --test-tags=<tag> --stop-after-init
+```
+
+Every module must have a `tests/` directory with `__init__.py` importing the test modules. Test classes inherit `odoo.tests.common.TransactionCase` (for data/model tests) or `odoo.tests.common.HttpCase` (for controller/UI tests). File naming: `test_<feature>.py`.
 
 ## Coding standards for Odoo modules
 
