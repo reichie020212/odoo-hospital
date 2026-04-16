@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_appointment_type_form_inherit_billing" model="ir.ui.view">
+        <field name="name">hms.appointment.type.form.inherit.hms_billing</field>
+        <field name="model">hms.appointment.type</field>
+        <field name="inherit_id" ref="hms_appointment.view_hms_appointment_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_duration']" position="after">
+                <field name="product_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hms_appointment_type_list_inherit_billing" model="ir.ui.view">
+        <field name="name">hms.appointment.type.list.inherit.hms_billing</field>
+        <field name="model">hms.appointment.type</field>
+        <field name="inherit_id" ref="hms_appointment.view_hms_appointment_type_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_duration']" position="after">
+                <field name="product_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

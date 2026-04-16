@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Seed a service product for the default consultation fee -->
+    <record id="product_general_consultation_fee" model="product.product">
+        <field name="name">General Consultation Fee</field>
+        <field name="type">service</field>
+        <field name="list_price">50.0</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+    </record>
+
+    <!-- Link it to the "General Consultation" appointment type from hms_appointment -->
+    <record id="hms_appointment.appointment_type_general" model="hms.appointment.type">
+        <field name="product_id" ref="product_general_consultation_fee"/>
+    </record>
+</odoo>

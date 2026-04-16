@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_consultation_form_inherit_billing" model="ir.ui.view">
+        <field name="name">hms.consultation.form.inherit.hms_billing</field>
+        <field name="model">hms.consultation</field>
+        <field name="inherit_id" ref="hms_clinical.view_hms_consultation_form"/>
+        <field name="arch" type="xml">
+            <!-- Billed ribbon on the sheet -->
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <widget name="web_ribbon" title="Billed" bg_color="bg-success"
+                        invisible="billing_state != 'billed'"/>
+            </xpath>
+            <!-- Create Invoice Draft button in header -->
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_create_sale_order"
+                        string="Create Invoice Draft"
+                        type="object"
+                        class="btn-primary"
+                        invisible="billing_state == 'billed' or state != 'done'"/>
+            </xpath>
+            <!-- Smart buttons before the title -->
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <div class="oe_button_box" name="billing_button_box">
+                    <button name="action_view_sale_order" type="object"
+                            class="oe_stat_button" icon="fa-pencil-square-o"
+                            invisible="not sale_order_id">
+                        <span class="o_stat_text">Sale Order</span>
+                    </button>
+                    <button name="action_view_invoices" type="object"
+                            class="oe_stat_button" icon="fa-money"
+                            invisible="invoice_count == 0">
+                        <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                    </button>
+                </div>
+            </xpath>
+            <!-- Hidden fields needed for visibility rules -->
+            <xpath expr="//sheet" position="inside">
+                <field name="sale_order_id" invisible="1"/>
+                <field name="billing_state" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add billing_state badge to the consultation list view -->
+    <record id="view_hms_consultation_list_inherit_billing" model="ir.ui.view">
+        <field name="name">hms.consultation.list.inherit.hms_billing</field>
+        <field name="model">hms.consultation</field>
+        <field name="inherit_id" ref="hms_clinical.view_hms_consultation_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="billing_state" widget="badge"
+                       decoration-danger="billing_state == 'not_billed'"
+                       decoration-success="billing_state == 'billed'"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
