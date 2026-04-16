@@ -97,6 +97,7 @@ Conventions:
 2. **No speculative JavaScript** — don't introduce OWL components or frontend JS unless explicitly asked.
 3. **PEP8-compliant, 120-char lines** — pre-commit will catch formatting, but write clean code up front.
 4. **Every module must have a `README.md`.** Create one at the module root (sibling of `__manifest__.py`) the moment a new module is scaffolded, and **keep it updated** whenever the module's purpose, models, views, security model, or external dependencies change. This README is committed and ships with the module — it is not optional and is distinct from the "no auto-README in `docs/plan/` or `docs/guide/`" rule above. Minimum sections: module name + one-line purpose, what it provides (models/views/menus added), dependencies, and any setup/configuration steps.
+5. **Every module must have a Mermaid ERD.** Each module has a corresponding `docs/guide/<module>-erd.md` file containing a Mermaid `erDiagram` showing its models, fields, and relationships. **Keep it updated** whenever models, fields, or relationships are added, removed, or changed — this includes changes made by later modules that extend the same models. If a change in module B adds fields or relationships to a model defined in module A, update module A's ERD as well.
 
 ## Documentation conventions
 
