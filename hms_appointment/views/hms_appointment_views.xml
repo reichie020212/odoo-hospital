@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================================================================
+         Dedicated appointment views (used from Hospital > Appointments).
+         These are separate from the stock calendar views so meetings
+         and medical appointments stay cleanly separated.
+         ================================================================ -->
+
+    <!-- Form -->
+    <record id="view_appointment_form" model="ir.ui.view">
+        <field name="name">calendar.event.appointment.form</field>
+        <field name="model">calendar.event</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            class="btn-primary"
+                            invisible="appointment_state != 'draft'"/>
+                    <button name="action_check_in" string="Check In" type="object"
+                            class="btn-primary"
+                            invisible="appointment_state != 'confirmed'"/>
+                    <button name="action_done" string="Done" type="object"
+                            class="btn-primary"
+                            invisible="appointment_state != 'checked_in'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="appointment_state in ('done', 'cancelled')"/>
+                    <button name="action_draft" string="Reset to Draft" type="object"
+                            invisible="appointment_state != 'cancelled'"/>
+                    <field name="appointment_state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,checked_in,done"/>
+                </header>
+                <sheet>
+                    <field name="is_appointment" invisible="1"/>
+                    <group>
+                        <group string="Patient &amp; Doctor">
+                            <field name="patient_id" required="1"/>
+                            <field name="doctor_id" required="1"/>
+                            <field name="appointment_type_id"/>
+                        </group>
+                        <group string="Schedule">
+                            <field name="name" string="Subject"/>
+                            <field name="start"/>
+                            <field name="stop"/>
+                            <field name="duration" widget="float_time"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="description" placeholder="Appointment notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List -->
+    <record id="view_appointment_list" model="ir.ui.view">
+        <field name="name">calendar.event.appointment.list</field>
+        <field name="model">calendar.event</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <list string="Appointments"
+                  decoration-danger="appointment_state == 'cancelled'"
+                  decoration-muted="appointment_state == 'done'">
+                <field name="start" string="Date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="appointment_type_id" optional="show"/>
+                <field name="appointment_state" widget="badge"
+                       decoration-info="appointment_state == 'draft'"
+                       decoration-primary="appointment_state == 'confirmed'"
+                       decoration-warning="appointment_state == 'checked_in'"
+                       decoration-success="appointment_state == 'done'"
+                       decoration-danger="appointment_state == 'cancelled'"/>
+                <field name="duration" string="Duration (h)" widget="float_time" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Calendar -->
+    <record id="view_appointment_calendar" model="ir.ui.view">
+        <field name="name">calendar.event.appointment.calendar</field>
+        <field name="model">calendar.event</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments"
+                      date_start="start"
+                      date_stop="stop"
+                      color="appointment_state"
+                      mode="week"
+                      event_open_popup="true"
+                      quick_create="0">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="appointment_state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Search -->
+    <record id="view_appointment_search" model="ir.ui.view">
+        <field name="name">calendar.event.appointment.search</field>
+        <field name="model">calendar.event</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <search string="Appointments">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="appointment_type_id"/>
+                <separator/>
+                <filter string="Draft" name="filter_draft"
+                        domain="[('appointment_state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="filter_confirmed"
+                        domain="[('appointment_state', '=', 'confirmed')]"/>
+                <filter string="Done" name="filter_done"
+                        domain="[('appointment_state', '=', 'done')]"/>
+                <filter string="Cancelled" name="filter_cancelled"
+                        domain="[('appointment_state', '=', 'cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Doctor" name="groupby_doctor"
+                            context="{'group_by': 'doctor_id'}"/>
+                    <filter string="Patient" name="groupby_patient"
+                            context="{'group_by': 'patient_id'}"/>
+                    <filter string="Status" name="groupby_state"
+                            context="{'group_by': 'appointment_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hms_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">calendar.event</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="domain">[('is_appointment', '=', True)]</field>
+        <field name="context">{'default_is_appointment': True}</field>
+        <field name="search_view_id" ref="view_appointment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Schedule a medical appointment</p>
+            <p>Create appointments from here to link patients, doctors, and track status.</p>
+        </field>
+    </record>
+    <record id="action_hms_appointment_view_list" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_hms_appointment"/>
+        <field name="view_id" ref="view_appointment_list"/>
+        <field name="view_mode">list</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="action_hms_appointment_view_calendar" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_hms_appointment"/>
+        <field name="view_id" ref="view_appointment_calendar"/>
+        <field name="view_mode">calendar</field>
+        <field name="sequence">2</field>
+    </record>
+    <record id="action_hms_appointment_view_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_hms_appointment"/>
+        <field name="view_id" ref="view_appointment_form"/>
+        <field name="view_mode">form</field>
+        <field name="sequence">3</field>
+    </record>
+</odoo>

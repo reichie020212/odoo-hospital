@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Minimal extension to the stock calendar event form.
+         Adds an is_appointment toggle and shows medical fields when active. -->
+    <record id="view_calendar_event_form_inherit_hms_appointment" model="ir.ui.view">
+        <field name="name">calendar.event.form.inherit.hms_appointment</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <separator/>
+                <group>
+                    <field name="is_appointment"/>
+                </group>
+                <group invisible="not is_appointment" string="Medical Appointment">
+                    <group>
+                        <field name="patient_id" required="is_appointment"/>
+                        <field name="doctor_id" required="is_appointment"/>
+                    </group>
+                    <group>
+                        <field name="appointment_type_id"/>
+                        <field name="appointment_state"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

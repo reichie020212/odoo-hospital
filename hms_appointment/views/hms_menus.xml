@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_hms_appointment"
+              name="Appointments"
+              parent="hms_base.menu_hms_root"
+              action="action_hms_appointment"
+              sequence="20"/>
+
+    <menuitem id="menu_hms_appointment_type"
+              name="Appointment Types"
+              parent="hms_base.menu_hms_configuration"
+              action="action_hms_appointment_type"
+              sequence="20"/>
+</odoo>

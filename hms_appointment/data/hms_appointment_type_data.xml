@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="appointment_type_general" model="hms.appointment.type">
+        <field name="name">General Consultation</field>
+        <field name="default_duration">0.5</field>
+    </record>
+    <record id="appointment_type_followup" model="hms.appointment.type">
+        <field name="name">Follow-up</field>
+        <field name="default_duration">0.25</field>
+    </record>
+    <record id="appointment_type_vaccination" model="hms.appointment.type">
+        <field name="name">Vaccination</field>
+        <field name="default_duration">0.25</field>
+    </record>
+</odoo>
