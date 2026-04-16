@@ -208,3 +208,6 @@ __marimo__/
 
 # Working plans (Architect/Executor blueprints) — not for distribution
 docs/plan/
+
+# Git worktrees for isolated feature work
+.worktrees/
