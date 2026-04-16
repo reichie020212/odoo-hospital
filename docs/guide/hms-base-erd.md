@@ -11,6 +11,7 @@ erDiagram
         int age "computed, non-stored"
         selection gender "male | female | other"
         selection blood_group "a+ | a- | b+ | b- | ab+ | ab- | o+ | o-"
+        int consultation_count "computed (added by hms_clinical)"
     }
 
     hr_employee {
@@ -20,7 +21,7 @@ erDiagram
         boolean is_nurse
         int specialization_id FK
         varchar license_no
-        int patient_count "computed, placeholder"
+        int patient_count "computed (wired by hms_clinical)"
     }
 
     hms_specialization {
@@ -52,5 +53,6 @@ erDiagram
 
 - `res.partner` and `hr.employee` are **inherited** Odoo CE models — the fields shown above are only the ones added by `hms_base`. Core fields (`name`, `email`, `phone`, etc.) are omitted.
 - `age` is a non-stored computed field (`@api.depends("date_of_birth")`); it never goes stale.
-- `patient_count` on `hr.employee` is a placeholder returning 0; it gets wired by `hms_clinical` in a later phase.
+- `patient_count` on `hr.employee` is defined here as a placeholder; `hms_clinical` overrides the compute to count distinct patients from `hms.consultation`.
+- `consultation_count` on `res.partner` is added by `hms_clinical` (not present until that module is installed).
 - The native `res.partner.ref` field is reused for patient identifiers, populated from the `hms.patient.ref` sequence on create when `is_patient=True`.
