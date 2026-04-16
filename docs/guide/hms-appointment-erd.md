@@ -34,6 +34,7 @@ erDiagram
         varchar name "required"
         float default_duration "hours, default 0.5"
         boolean active "default true"
+        int product_id FK "service product (added by hms_billing)"
     }
 
     calendar_event }o--|| res_partner : "patient_id"

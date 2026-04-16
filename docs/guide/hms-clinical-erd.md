@@ -15,6 +15,8 @@ erDiagram
         text diagnosis
         text treatment_plan
         selection state "draft | in_progress | done | cancelled"
+        int sale_order_id FK "added by hms_billing"
+        selection billing_state "not_billed | billed (added by hms_billing)"
     }
 
     hms_vital {
