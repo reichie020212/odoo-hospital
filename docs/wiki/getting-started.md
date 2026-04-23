@@ -6,6 +6,8 @@ This guide walks you through the Hospital Management System (HMS) built on Odoo 
 
 - [Logging In](#logging-in)
 - [Navigation](#navigation)
+- [Hospital Website](#hospital-website)
+- [Patient Registration](#patient-registration)
 - [Patient Management](#patient-management)
 - [Appointments](#appointments)
 - [Consultations (EMR)](#consultations-emr)
@@ -44,6 +46,72 @@ The Hospital module has these main menu items:
 | **Admissions** | Inpatient ward/bed management |
 | **Insurance Policies** | Patient insurance coverage and co-pay rules |
 | **Configuration** | Specializations, appointment types, lab test types, wards, beds, medicines |
+
+---
+
+## Hospital Website
+
+The HMS includes a public-facing hospital website accessible to anyone without logging in.
+
+### Home Page
+
+Visit the root URL (e.g. `http://localhost:8069/`) to see the hospital home page with a hero section, services overview, doctor highlights, and call-to-action buttons.
+
+![Hospital Website Home](images/18-website-home.png)
+
+### Our Doctors
+
+The `/hospital/doctors` page displays all doctors who have been marked as **Published on Website** in the backend. Each card shows the doctor's photo, specialization, job title, and biography.
+
+![Our Doctors Page](images/19-website-doctors.png)
+
+To publish a doctor: open their employee record in the backend, go to the form, and check **Published on Website**. Add a **Website Bio** (HTML) for their public profile.
+
+### Services
+
+The `/hospital/services` page lists all appointment types marked as published, with descriptions and duration.
+
+### Contact
+
+The `/hospital/contact` page shows the hospital's address, phone, email (from the company record), and operating hours.
+
+---
+
+## Patient Registration
+
+Patients can create their own portal account via the self-registration form at `/hospital/register`. This is accessible from the "Register as Patient" button on the home page or directly via the URL.
+
+![Patient Registration Form](images/20-patient-registration.png)
+
+### How It Works
+
+1. Patient visits `/hospital/register`.
+2. Fills in the form:
+   - **Full Name** (required)
+   - **Date of Birth** (optional)
+   - **Gender** (optional)
+   - **Phone Number** (optional)
+   - **Email** (required — becomes the login)
+   - **Password** + **Confirm Password** (required, min. 8 characters)
+3. Clicks **Create My Account**.
+4. The system creates:
+   - A `res.partner` record flagged as `is_patient = True` with the provided demographics.
+   - A portal user linked to that partner with the given email and password.
+5. A success message appears with a link to the **Patient Portal**.
+6. The patient can now log in at `/my` with their email and password.
+
+### Validation
+
+- Name, email, and password are required.
+- Passwords must match and be at least 8 characters.
+- Duplicate emails are rejected (if an account already exists).
+- On any error, the form re-displays with the error message and the previously entered values preserved.
+
+### For Administrators
+
+Patients who register via this form automatically appear in **Hospital → Patients** with their demographics pre-filled. No manual setup is needed — the patient is ready for appointments and consultations immediately.
+
+If you prefer to disable self-registration and create patient accounts manually, you can remove the `/hospital/register` menu link via the Odoo Website Builder.
 
 ---
 
@@ -268,17 +336,23 @@ Under **Hospital → Configuration → Wards** and **Beds**, manage the physical
 
 ## Patient Portal
 
-Patients with portal access can log in and view their records at `/my`:
+Patients can log in at `/my` to view their medical records. The portal is **view-only** — patients cannot create or modify records.
 
-- **My Appointments** — list of all their medical appointments with status
-- **My Consultations** — list of consultations with diagnosis, vitals, and prescriptions
+### What Patients See
 
-The portal is **view-only** — patients cannot create or modify records.
+- **My Appointments** — list of all their medical appointments with date, doctor, type, and status.
+- **My Consultations** — list of consultations with reference, diagnosis, vitals, and prescriptions.
+- **Invoices** — if `hms_billing` is installed, patients can also see their invoices (via Odoo's built-in account portal).
 
-To set up portal access for a patient:
+### Getting Portal Access
+
+**Self-registration (recommended):** Patients register themselves at `/hospital/register` — see [Patient Registration](#patient-registration) above. No admin action needed.
+
+**Manual setup (admin):** If a patient was created in the backend without a portal account:
 1. Go to **Settings → Users**.
-2. Create a user linked to the patient's partner record.
+2. Create a user linked to the patient's `res.partner` record.
 3. Assign **Portal** access rights.
+4. Share the login credentials with the patient.
 
 ---
 
