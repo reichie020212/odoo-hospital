@@ -82,7 +82,8 @@
                     <div class="container">
                         <h2>Ready to book an appointment?</h2>
                         <p class="lead">Log in to your patient portal to view your records and appointments.</p>
-                        <a href="/my" class="btn btn-light btn-lg mt-2">Patient Portal Login</a>
+                        <a href="/my" class="btn btn-light btn-lg mt-2 me-2">Patient Portal Login</a>
+                        <a href="/hospital/register" class="btn btn-outline-light btn-lg mt-2">Register as Patient</a>
                     </div>
                 </section>
             </div>
@@ -238,6 +239,108 @@
                                 <div class="mt-4 text-center">
                                     <a href="/my" class="btn btn-primary btn-lg">Patient Portal</a>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         PATIENT REGISTRATION PAGE
+         ============================================================ -->
+    <template id="hospital_register" name="Patient Registration">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="pt-5 pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-7">
+                                <h1 class="text-center mb-2">Register as a Patient</h1>
+                                <p class="text-center text-muted mb-4">Create your account to access the patient portal, view appointments, and check your medical records.</p>
+
+                                <!-- Success message -->
+                                <t t-if="success">
+                                    <div class="alert alert-success text-center">
+                                        <h4 class="alert-heading">Registration Successful!</h4>
+                                        <p>Your patient account has been created. You can now log in to the patient portal.</p>
+                                        <a href="/my" class="btn btn-success mt-2">Go to Patient Portal</a>
+                                    </div>
+                                </t>
+
+                                <!-- Registration form -->
+                                <t t-if="not success">
+                                    <t t-if="error">
+                                        <div class="alert alert-danger" t-out="error"/>
+                                    </t>
+
+                                    <form action="/hospital/register/submit" method="POST" class="card shadow-sm">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-3">Personal Information</h5>
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                       t-att-value="values.get('name', '')" required="required"
+                                                       placeholder="e.g. Maria Santos"/>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                                           t-att-value="values.get('date_of_birth', '')"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="gender" class="form-label">Gender</label>
+                                                    <select class="form-select" id="gender" name="gender">
+                                                        <option value="">-- Select --</option>
+                                                        <option value="male" t-att-selected="values.get('gender') == 'male'">Male</option>
+                                                        <option value="female" t-att-selected="values.get('gender') == 'female'">Female</option>
+                                                        <option value="other" t-att-selected="values.get('gender') == 'other'">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Phone Number</label>
+                                                <input type="tel" class="form-control" id="phone" name="phone"
+                                                       t-att-value="values.get('phone', '')"
+                                                       placeholder="e.g. +1 555-0101"/>
+                                            </div>
+
+                                            <hr/>
+                                            <h5 class="card-title mb-3">Account Credentials</h5>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                       t-att-value="values.get('email', '')" required="required"
+                                                       placeholder="e.g. maria@example.com"/>
+                                                <div class="form-text">This will be your login email.</div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                                    <input type="password" class="form-control" id="password" name="password"
+                                                           required="required" minlength="8"
+                                                           placeholder="Min. 8 characters"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="password_confirm" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                                    <input type="password" class="form-control" id="password_confirm" name="password_confirm"
+                                                           required="required" minlength="8"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mt-4">
+                                                <button type="submit" class="btn btn-primary btn-lg">Create My Account</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <p class="text-center mt-3 text-muted">
+                                        Already have an account? <a href="/my">Log in here</a>
+                                    </p>
+                                </t>
                             </div>
                         </div>
                     </div>
