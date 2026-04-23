@@ -18,20 +18,18 @@
                         class="btn-primary"
                         invisible="billing_state == 'billed' or state != 'done'"/>
             </xpath>
-            <!-- Smart buttons before the title -->
-            <xpath expr="//div[@class='oe_title']" position="before">
-                <div class="oe_button_box" name="billing_button_box">
-                    <button name="action_view_sale_order" type="object"
-                            class="oe_stat_button" icon="fa-pencil-square-o"
-                            invisible="not sale_order_id">
-                        <span class="o_stat_text">Sale Order</span>
-                    </button>
-                    <button name="action_view_invoices" type="object"
-                            class="oe_stat_button" icon="fa-money"
-                            invisible="invoice_count == 0">
-                        <field name="invoice_count" widget="statinfo" string="Invoices"/>
-                    </button>
-                </div>
+            <!-- Smart buttons in the shared button_box from hms_clinical -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_sale_order" type="object"
+                        class="oe_stat_button" icon="fa-pencil-square-o"
+                        invisible="not sale_order_id">
+                    <span class="o_stat_text">Sale Order</span>
+                </button>
+                <button name="action_view_invoices" type="object"
+                        class="oe_stat_button" icon="fa-money"
+                        invisible="invoice_count == 0">
+                    <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                </button>
             </xpath>
             <!-- Hidden fields needed for visibility rules -->
             <xpath expr="//sheet" position="inside">
