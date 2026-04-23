@@ -1,11 +1,13 @@
 # GEMINI.md - Instructional Context for odoo-hospital
 
-This project is a Hospital Management System custom module for **Odoo 19 Community Edition**. It is currently in an early-stage scaffold phase.
+This project is a Hospital Management System for **Odoo 19 Community Edition** — 12 custom addon modules covering the full patient lifecycle.
 
 ## Project Overview
 - **Purpose**: Hospital Management System for Odoo 19 CE.
-- **Repository Structure**: This repository is intended to reside in Odoo's custom addons path (`~/odoo/custom_addons/`). New Odoo modules should be created as **sibling subdirectories** within this root, each with its own `__manifest__.py` and `__init__.py`.
-- **Current State**: Placeholder scaffold with Python tooling configuration and a `main.py` entry point. No Odoo modules exist yet; they must be created from scratch.
+- **Repository Structure**: This repository resides in Odoo's custom addons path (`~/odoo/custom_addons/`). Each module is a sibling subdirectory with its own `__manifest__.py` and `__init__.py`.
+- **Current State**: Feature-complete system with 12 modules, 140+ tests, Docker Compose setup (dev + prod).
+- **Modules**: `hms_base`, `hms_appointment`, `hms_clinical`, `hms_billing`, `hms_pharmacy`, `hms_lab`, `hms_inpatient`, `hms_portal`, `hms_lab_billing` (auto-install bridge), `hms_pharmacy_billing` (auto-install bridge), `hms_insurance`.
+- **Odoo CE modules reused**: `res.partner`, `hr.employee`, `calendar.event`, `product.product`, `sale.order`, `account.move`, `stock.picking`, `stock.lot`, `mail.thread`, `portal`.
 
 ## Division of Labor
 
@@ -126,5 +128,5 @@ All Markdown documentation is organized under the `docs/` directory, following a
 2. **Do not add yourself as a co-author.** No `Co-Authored-By: Gemini ...` trailer, no "Generated with Gemini" footer, no attribution of any kind in the commit message. The `Signed-off-by` line from `-s` belongs to Red, not to you.
 
 ## Project Quirks
-- **`--force/` Directory**: A directory named `--force/` exists at the root, containing an accidental venv layout. Do not delete or modify this directory unless specifically instructed.
 - **Venv**: The canonical virtual environment is located in `.venv/`.
+- A legacy `main.py` placeholder exists at the repo root from the initial scaffold. It is not used by any module.

@@ -4,11 +4,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Hospital Management System custom module for **Odoo 19 Community Edition**.
+Hospital Management System for **Odoo 19 Community Edition** — 12 custom addon modules covering the full patient lifecycle.
 
-The first module (`hms_base`) has been scaffolded and provides patient/staff extensions on `res.partner` and `hr.employee`, plus the `hms.specialization` master model and Hospital security groups. Further modules (`hms_appointment`, `hms_clinical`, `hms_billing`) are planned as part of the MVP.
+**Modules (in dependency order):**
+1. `hms_base` — patient/staff extensions on `res.partner` and `hr.employee`, specializations, security groups.
+2. `hms_appointment` — medical scheduling on `calendar.event`, 5-state workflow.
+3. `hms_clinical` — EMR: consultations (mail.thread), vitals, prescriptions, medical history.
+4. `hms_billing` — direct-pay invoicing via `sale.order`.
+5. `hms_pharmacy` — prescription dispensing via `stock.picking` with FEFO expiry.
+6. `hms_lab` — lab requests with panel expansion, results, abnormal-value detection.
+7. `hms_inpatient` — wards/beds, admissions, discharge, daily room-charge CRON.
+8. `hms_portal` — view-only patient portal (appointments + consultations).
+9. `hms_lab_billing` — bridge: lab tests → sale.order *(auto-install)*.
+10. `hms_pharmacy_billing` — bridge: dispensed medicines → sale.order *(auto-install)*.
+11. `hms_insurance` — insurance policies, co-pay split billing.
 
-The parent directory is `~/odoo/custom_addons/`, meaning this repo is intended to live inside Odoo's custom addons path. Each Odoo module added here should be a sibling directory with its own `__manifest__.py` and `__init__.py`.
+**Infrastructure:** Docker Compose (dev + prod), PostgreSQL 16, 140+ Odoo TransactionCase tests.
+
+The parent directory is `~/odoo/custom_addons/`, meaning this repo lives inside Odoo's custom addons path. Each module is a sibling directory with its own `__manifest__.py` and `__init__.py`.
 
 ## Division of Labor (Gemini ↔ Claude)
 
@@ -119,5 +132,5 @@ Rules:
 
 ## Known quirks
 
-- A directory literally named `--force/` exists at the repo root. It contains a venv layout (`bin/`, `lib/`, `pyvenv.cfg`, `CACHEDIR.TAG`) and appears to be the result of an accidental `uv venv --force` where `--force` got interpreted as the target path. It is **not** ignored by `.gitignore`. Leave it alone unless Red asks to clean it up — don't delete on your own initiative.
 - The canonical venv is `.venv/`, which `.gitignore` already covers.
+- A legacy `main.py` placeholder exists at the repo root from the initial scaffold. It is not used by any module.
