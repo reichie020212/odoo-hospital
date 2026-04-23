@@ -22,5 +22,8 @@ detection based on normal ranges.
         "views/hms_consultation_views.xml",
         "views/hms_menus.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

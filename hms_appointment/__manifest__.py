@@ -20,5 +20,8 @@ the ``is_appointment`` flag.
         "views/hms_appointment_views.xml",
         "views/hms_menus.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

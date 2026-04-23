@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Medicine Products (for prescriptions)
+         ============================================================ -->
+    <record id="demo_product_amoxicillin" model="product.product">
+        <field name="name">Amoxicillin 500mg</field>
+        <field name="type">consu</field>
+        <field name="list_price">12.50</field>
+    </record>
+    <record id="demo_product_paracetamol" model="product.product">
+        <field name="name">Paracetamol 500mg</field>
+        <field name="type">consu</field>
+        <field name="list_price">5.00</field>
+    </record>
+    <record id="demo_product_omeprazole" model="product.product">
+        <field name="name">Omeprazole 20mg</field>
+        <field name="type">consu</field>
+        <field name="list_price">8.00</field>
+    </record>
+
+    <!-- ============================================================
+         Demo Consultation 1: Maria Santos (done, with vitals + Rx)
+         ============================================================ -->
+    <record id="demo_cons_maria" model="hms.consultation">
+        <field name="patient_id" ref="hms_base.demo_patient_maria"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_johnson"/>
+        <field name="appointment_id" ref="hms_appointment.demo_appt_maria_cardio"/>
+        <field name="date" eval="(datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d 09:15:00')"/>
+        <field name="chief_complaint">Chest tightness and shortness of breath during exercise for the past two weeks.</field>
+        <field name="history">Patient reports increasing dyspnea on exertion. No syncope or palpitations. Family history of coronary artery disease (father, age 58).</field>
+        <field name="examination">BP 138/88 mmHg. Heart sounds regular, no murmurs. Lungs clear bilaterally. No peripheral edema.</field>
+        <field name="diagnosis">Essential hypertension, stage 1. Exertional dyspnea — likely deconditioning, rule out cardiac cause.</field>
+        <field name="treatment_plan">Start Amlodipine 5mg daily. Lifestyle modifications: reduce sodium intake, 30 min walking daily. Follow-up in 4 weeks. Order ECG and lipid panel.</field>
+        <field name="state">done</field>
+    </record>
+
+    <!-- Vitals for Maria's consultation -->
+    <record id="demo_vital_maria" model="hms.vital">
+        <field name="consultation_id" ref="demo_cons_maria"/>
+        <field name="bp_systolic">138</field>
+        <field name="bp_diastolic">88</field>
+        <field name="heart_rate">82</field>
+        <field name="temperature">36.6</field>
+        <field name="spo2">97</field>
+        <field name="weight">68.5</field>
+        <field name="height">162</field>
+    </record>
+
+    <!-- Prescriptions for Maria -->
+    <record id="demo_rx_maria_1" model="hms.prescription.line">
+        <field name="consultation_id" ref="demo_cons_maria"/>
+        <field name="product_id" ref="demo_product_omeprazole"/>
+        <field name="qty">30</field>
+        <field name="dosage">20mg</field>
+        <field name="frequency">Once daily, before breakfast</field>
+        <field name="duration_days">30</field>
+        <field name="instructions">Take on an empty stomach, 30 minutes before first meal.</field>
+    </record>
+
+    <!-- ============================================================
+         Demo Consultation 2: Juan dela Cruz (done, with vitals + Rx)
+         ============================================================ -->
+    <record id="demo_cons_juan" model="hms.consultation">
+        <field name="patient_id" ref="hms_base.demo_patient_juan"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_lee"/>
+        <field name="appointment_id" ref="hms_appointment.demo_appt_juan_general"/>
+        <field name="date" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d 10:10:00')"/>
+        <field name="chief_complaint">Sore throat and fever for 3 days. Difficulty swallowing.</field>
+        <field name="history">Onset 3 days ago with mild fever (38.2°C at home). Progressive odynophagia. No cough or rhinorrhea. No known sick contacts.</field>
+        <field name="examination">Temp 38.1°C. Pharynx erythematous with tonsillar exudates. Anterior cervical lymphadenopathy. Lungs clear.</field>
+        <field name="diagnosis">Acute bacterial pharyngitis (likely Group A Streptococcus).</field>
+        <field name="treatment_plan">Amoxicillin 500mg TID for 10 days. Paracetamol for pain and fever. Adequate hydration. Return if symptoms worsen or no improvement in 48 hours.</field>
+        <field name="state">done</field>
+    </record>
+
+    <record id="demo_vital_juan" model="hms.vital">
+        <field name="consultation_id" ref="demo_cons_juan"/>
+        <field name="bp_systolic">122</field>
+        <field name="bp_diastolic">78</field>
+        <field name="heart_rate">88</field>
+        <field name="temperature">38.1</field>
+        <field name="spo2">98</field>
+        <field name="weight">78.0</field>
+        <field name="height">175</field>
+    </record>
+
+    <record id="demo_rx_juan_1" model="hms.prescription.line">
+        <field name="consultation_id" ref="demo_cons_juan"/>
+        <field name="product_id" ref="demo_product_amoxicillin"/>
+        <field name="qty">30</field>
+        <field name="dosage">500mg</field>
+        <field name="frequency">Three times daily</field>
+        <field name="duration_days">10</field>
+        <field name="instructions">Take with food. Complete the full course even if symptoms improve.</field>
+    </record>
+    <record id="demo_rx_juan_2" model="hms.prescription.line">
+        <field name="consultation_id" ref="demo_cons_juan"/>
+        <field name="product_id" ref="demo_product_paracetamol"/>
+        <field name="qty">20</field>
+        <field name="dosage">500mg</field>
+        <field name="frequency">Every 6 hours as needed</field>
+        <field name="duration_days">5</field>
+        <field name="instructions">For pain and fever. Do not exceed 4g per day.</field>
+    </record>
+
+    <!-- ============================================================
+         Demo Consultation 3: Emily Chen (in_progress — pediatric)
+         ============================================================ -->
+    <record id="demo_cons_emily" model="hms.consultation">
+        <field name="patient_id" ref="hms_base.demo_patient_emily"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_garcia"/>
+        <field name="date" eval="datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="chief_complaint">Routine well-child visit. Mother reports child is healthy, no concerns.</field>
+        <field name="state">in_progress</field>
+    </record>
+
+    <record id="demo_vital_emily" model="hms.vital">
+        <field name="consultation_id" ref="demo_cons_emily"/>
+        <field name="bp_systolic">95</field>
+        <field name="bp_diastolic">60</field>
+        <field name="heart_rate">95</field>
+        <field name="temperature">36.8</field>
+        <field name="spo2">99</field>
+        <field name="weight">22.5</field>
+        <field name="height">118</field>
+    </record>
+</odoo>

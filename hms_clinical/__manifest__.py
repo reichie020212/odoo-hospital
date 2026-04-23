@@ -21,5 +21,8 @@ patient form.
         "views/res_partner_views.xml",
         "views/hms_menus.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

@@ -19,5 +19,8 @@ location ensures the nearest-expiry lot is consumed first.  Extends
         "views/product_product_views.xml",
         "views/hms_consultation_views.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

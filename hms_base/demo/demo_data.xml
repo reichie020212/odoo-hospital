@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Patients
+         ============================================================ -->
+    <record id="demo_patient_maria" model="res.partner">
+        <field name="name">Maria Santos</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">female</field>
+        <field name="blood_group">a+</field>
+        <field name="date_of_birth">1990-03-15</field>
+        <field name="email">maria.santos@example.com</field>
+        <field name="phone">+1 555-0101</field>
+    </record>
+    <record id="demo_patient_juan" model="res.partner">
+        <field name="name">Juan dela Cruz</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">male</field>
+        <field name="blood_group">o+</field>
+        <field name="date_of_birth">1985-07-22</field>
+        <field name="email">juan.delacruz@example.com</field>
+        <field name="phone">+1 555-0102</field>
+    </record>
+    <record id="demo_patient_emily" model="res.partner">
+        <field name="name">Emily Chen</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">female</field>
+        <field name="blood_group">b+</field>
+        <field name="date_of_birth">2018-11-08</field>
+        <field name="email">chen.family@example.com</field>
+        <field name="phone">+1 555-0103</field>
+    </record>
+    <record id="demo_patient_ahmed" model="res.partner">
+        <field name="name">Ahmed Hassan</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">male</field>
+        <field name="blood_group">ab+</field>
+        <field name="date_of_birth">1972-01-30</field>
+        <field name="email">ahmed.hassan@example.com</field>
+        <field name="phone">+1 555-0104</field>
+    </record>
+
+    <!-- Guardian link: Emily (child) → Maria (parent) -->
+    <record id="demo_patient_emily" model="res.partner">
+        <field name="guardian_ids" eval="[(4, ref('demo_patient_maria'))]"/>
+    </record>
+
+    <!-- ============================================================
+         Demo Doctors (hr.employee)
+         ============================================================ -->
+    <record id="demo_doctor_johnson" model="hr.employee">
+        <field name="name">Dr. Sarah Johnson</field>
+        <field name="is_doctor" eval="True"/>
+        <field name="specialization_id" ref="hms_base.specialization_cardiology"/>
+        <field name="license_no">MED-2024-0501</field>
+        <field name="job_title">Senior Cardiologist</field>
+    </record>
+    <record id="demo_doctor_lee" model="hr.employee">
+        <field name="name">Dr. Michael Lee</field>
+        <field name="is_doctor" eval="True"/>
+        <field name="specialization_id" ref="hms_base.specialization_general_medicine"/>
+        <field name="license_no">MED-2024-0502</field>
+        <field name="job_title">General Practitioner</field>
+    </record>
+    <record id="demo_doctor_garcia" model="hr.employee">
+        <field name="name">Dr. Ana Garcia</field>
+        <field name="is_doctor" eval="True"/>
+        <field name="specialization_id" ref="hms_base.specialization_pediatrics"/>
+        <field name="license_no">MED-2024-0503</field>
+        <field name="job_title">Pediatrician</field>
+    </record>
+
+    <!-- Demo Nurse -->
+    <record id="demo_nurse_reyes" model="hr.employee">
+        <field name="name">Nurse Patricia Reyes</field>
+        <field name="is_nurse" eval="True"/>
+        <field name="job_title">Head Nurse</field>
+    </record>
+</odoo>

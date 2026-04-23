@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Mark demo medicines as is_medicine for the Medicines menu -->
+    <record id="hms_clinical.demo_product_amoxicillin" model="product.product">
+        <field name="is_medicine" eval="True"/>
+    </record>
+    <record id="hms_clinical.demo_product_paracetamol" model="product.product">
+        <field name="is_medicine" eval="True"/>
+    </record>
+    <record id="hms_clinical.demo_product_omeprazole" model="product.product">
+        <field name="is_medicine" eval="True"/>
+    </record>
+
+    <!-- Demo data for dispensing is implicit: users can click "Dispense"
+         on completed consultations with prescriptions. No pre-created
+         pickings — this keeps the demo interactive. -->
+</odoo>

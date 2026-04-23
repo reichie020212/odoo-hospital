@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Appointments (various states)
+         ============================================================ -->
+    <record id="demo_appt_maria_cardio" model="calendar.event">
+        <field name="name">Cardiology checkup — Maria Santos</field>
+        <field name="start" eval="(datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d 09:00:00')"/>
+        <field name="stop" eval="(datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d 09:30:00')"/>
+        <field name="is_appointment" eval="True"/>
+        <field name="patient_id" ref="hms_base.demo_patient_maria"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_johnson"/>
+        <field name="appointment_type_id" ref="hms_appointment.appointment_type_general"/>
+        <field name="appointment_state">done</field>
+    </record>
+
+    <record id="demo_appt_juan_general" model="calendar.event">
+        <field name="name">General consultation — Juan dela Cruz</field>
+        <field name="start" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d 10:00:00')"/>
+        <field name="stop" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d 10:30:00')"/>
+        <field name="is_appointment" eval="True"/>
+        <field name="patient_id" ref="hms_base.demo_patient_juan"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_lee"/>
+        <field name="appointment_type_id" ref="hms_appointment.appointment_type_general"/>
+        <field name="appointment_state">done</field>
+    </record>
+
+    <record id="demo_appt_emily_pediatric" model="calendar.event">
+        <field name="name">Pediatric visit — Emily Chen</field>
+        <field name="start" eval="(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d 14:00:00')"/>
+        <field name="stop" eval="(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d 14:30:00')"/>
+        <field name="is_appointment" eval="True"/>
+        <field name="patient_id" ref="hms_base.demo_patient_emily"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_garcia"/>
+        <field name="appointment_type_id" ref="hms_appointment.appointment_type_general"/>
+        <field name="appointment_state">confirmed</field>
+    </record>
+
+    <record id="demo_appt_ahmed_followup" model="calendar.event">
+        <field name="name">Follow-up — Ahmed Hassan</field>
+        <field name="start" eval="(datetime.now() + timedelta(days=3)).strftime('%Y-%m-%d 11:00:00')"/>
+        <field name="stop" eval="(datetime.now() + timedelta(days=3)).strftime('%Y-%m-%d 11:15:00')"/>
+        <field name="is_appointment" eval="True"/>
+        <field name="patient_id" ref="hms_base.demo_patient_ahmed"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_johnson"/>
+        <field name="appointment_type_id" ref="hms_appointment.appointment_type_followup"/>
+        <field name="appointment_state">draft</field>
+    </record>
+</odoo>

@@ -25,5 +25,8 @@ groups.
         "views/hms_menus.xml",
     ],
     "application": True,
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

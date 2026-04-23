@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Lab Request: Maria Santos — CBC panel + Glucose
+         ============================================================ -->
+    <record id="demo_lab_request_maria" model="hms.lab.request">
+        <field name="patient_id" ref="hms_base.demo_patient_maria"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_johnson"/>
+        <field name="consultation_id" ref="hms_clinical.demo_cons_maria"/>
+        <field name="date" eval="(datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d 09:30:00')"/>
+        <field name="test_type_ids" eval="[(6, 0, [ref('hms_lab.test_type_cbc'), ref('hms_lab.test_type_blood_glucose')])]"/>
+        <field name="state">done</field>
+    </record>
+
+    <!-- Results: CBC panel children + Glucose (some abnormal) -->
+    <record id="demo_result_wbc" model="hms.lab.result">
+        <field name="request_id" ref="demo_lab_request_maria"/>
+        <field name="test_type_id" ref="hms_lab.test_type_wbc"/>
+        <field name="value">6.2</field>
+    </record>
+    <record id="demo_result_rbc" model="hms.lab.result">
+        <field name="request_id" ref="demo_lab_request_maria"/>
+        <field name="test_type_id" ref="hms_lab.test_type_rbc"/>
+        <field name="value">4.8</field>
+    </record>
+    <record id="demo_result_platelets" model="hms.lab.result">
+        <field name="request_id" ref="demo_lab_request_maria"/>
+        <field name="test_type_id" ref="hms_lab.test_type_platelets"/>
+        <field name="value">280</field>
+    </record>
+    <record id="demo_result_hematocrit" model="hms.lab.result">
+        <field name="request_id" ref="demo_lab_request_maria"/>
+        <field name="test_type_id" ref="hms_lab.test_type_hematocrit"/>
+        <field name="value">42</field>
+    </record>
+    <!-- Glucose: 115 mg/dL — above normal 70-100 → flagged abnormal -->
+    <record id="demo_result_glucose" model="hms.lab.result">
+        <field name="request_id" ref="demo_lab_request_maria"/>
+        <field name="test_type_id" ref="hms_lab.test_type_blood_glucose"/>
+        <field name="value">115</field>
+    </record>
+</odoo>

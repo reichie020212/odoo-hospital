@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Admission: Ahmed Hassan — admitted to General Ward
+         ============================================================ -->
+    <record id="demo_admission_ahmed" model="hms.admission">
+        <field name="patient_id" ref="hms_base.demo_patient_ahmed"/>
+        <field name="doctor_id" ref="hms_base.demo_doctor_johnson"/>
+        <field name="bed_id" ref="hms_inpatient.bed_g1"/>
+        <field name="admission_date" eval="(datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d 14:00:00')"/>
+        <field name="diagnosis">Chest pain under observation. Rule out acute coronary syndrome.</field>
+        <field name="notes">Patient to be monitored for 48 hours. ECG and troponin levels ordered.</field>
+        <field name="state">admitted</field>
+    </record>
+</odoo>

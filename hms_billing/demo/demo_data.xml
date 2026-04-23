@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Demo data for hms_billing is implicit: the demo consultations from
+         hms_clinical have appointments with billing products. Users can click
+         "Create Invoice Draft" on the completed consultations to see billing
+         in action. No pre-created SOs — this keeps the demo interactive. -->
+</odoo>

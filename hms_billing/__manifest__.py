@@ -18,5 +18,8 @@ appointment type.  A "Billed" ribbon prevents double-invoicing.  Also extends
         "views/hms_consultation_views.xml",
         "views/hms_appointment_type_views.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

@@ -21,5 +21,8 @@ bed's product.  Discharge frees the bed and finalizes the billing period.
         "views/hms_admission_views.xml",
         "views/hms_menus.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }

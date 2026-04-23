@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Insurance Company
+         ============================================================ -->
+    <record id="demo_insurer_medilife" model="res.partner">
+        <field name="name">MediLife Insurance Co.</field>
+        <field name="is_insurance_company" eval="True"/>
+        <field name="is_company" eval="True"/>
+        <field name="email">claims@medilife-insurance.example.com</field>
+        <field name="phone">+1 800-555-0199</field>
+    </record>
+
+    <!-- ============================================================
+         Demo Insurance Policy: Maria Santos — 80% coverage
+         ============================================================ -->
+    <record id="demo_policy_maria" model="hms.insurance.policy">
+        <field name="name">POL-2026-ML-00421</field>
+        <field name="patient_id" ref="hms_base.demo_patient_maria"/>
+        <field name="insurance_company_id" ref="demo_insurer_medilife"/>
+        <field name="policy_type">individual</field>
+        <field name="coverage_percentage">80.0</field>
+        <field name="valid_from" eval="(datetime.now() - timedelta(days=180)).strftime('%Y-%m-%d')"/>
+        <field name="valid_until" eval="(datetime.now() + timedelta(days=185)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <!-- Demo Policy: Ahmed Hassan — 60% corporate coverage -->
+    <record id="demo_policy_ahmed" model="hms.insurance.policy">
+        <field name="name">POL-2026-ML-00835</field>
+        <field name="patient_id" ref="hms_base.demo_patient_ahmed"/>
+        <field name="insurance_company_id" ref="demo_insurer_medilife"/>
+        <field name="policy_type">corporate</field>
+        <field name="coverage_percentage">60.0</field>
+        <field name="valid_from" eval="(datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
+        <field name="valid_until" eval="(datetime.now() + timedelta(days=275)).strftime('%Y-%m-%d')"/>
+    </record>
+</odoo>
