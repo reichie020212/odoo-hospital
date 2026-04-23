@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_hms_admission"
+              name="Admissions"
+              parent="hms_base.menu_hms_root"
+              action="action_hms_admission"
+              sequence="50"/>
+
+    <menuitem id="menu_hms_ward"
+              name="Wards"
+              parent="hms_base.menu_hms_configuration"
+              action="action_hms_ward"
+              sequence="50"/>
+
+    <menuitem id="menu_hms_bed"
+              name="Beds"
+              parent="hms_base.menu_hms_configuration"
+              action="action_hms_bed"
+              sequence="55"/>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hms_ward_user,hms.ward.user,model_hms_ward,hms_base.group_hms_user,1,0,0,0
+access_hms_ward_manager,hms.ward.manager,model_hms_ward,hms_base.group_hms_manager,1,1,1,1
+access_hms_bed_user,hms.bed.user,model_hms_bed,hms_base.group_hms_user,1,0,0,0
+access_hms_bed_manager,hms.bed.manager,model_hms_bed,hms_base.group_hms_manager,1,1,1,1
+access_hms_admission_user,hms.admission.user,model_hms_admission,hms_base.group_hms_user,1,1,1,0
+access_hms_admission_manager,hms.admission.manager,model_hms_admission,hms_base.group_hms_manager,1,1,1,1

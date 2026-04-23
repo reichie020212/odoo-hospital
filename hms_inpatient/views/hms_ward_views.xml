@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_ward_list" model="ir.ui.view">
+        <field name="name">hms.ward.list</field>
+        <field name="model">hms.ward</field>
+        <field name="arch" type="xml">
+            <list string="Wards">
+                <field name="name"/>
+                <field name="floor" optional="show"/>
+                <field name="gender_restriction"/>
+                <field name="bed_count"/>
+                <field name="available_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_ward_form" model="ir.ui.view">
+        <field name="name">hms.ward.form</field>
+        <field name="model">hms.ward</field>
+        <field name="arch" type="xml">
+            <form string="Ward">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-bed" type="object" name="action_view_beds">
+                            <div class="o_stat_info">
+                                <field name="available_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> / </span>
+                                <field name="bed_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Beds</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="floor"/>
+                            <field name="gender_restriction"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Beds">
+                        <field name="bed_ids" nolabel="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="bed_type"/>
+                                <field name="state" widget="badge"
+                                       decoration-success="state == 'available'"
+                                       decoration-danger="state == 'occupied'"
+                                       decoration-warning="state == 'cleaning'"
+                                       decoration-muted="state == 'maintenance'"/>
+                                <field name="product_id" optional="show"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hms_ward" model="ir.actions.act_window">
+        <field name="name">Wards</field>
+        <field name="res_model">hms.ward</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a ward</p>
+        </field>
+    </record>
+</odoo>

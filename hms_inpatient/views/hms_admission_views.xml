@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_admission_form" model="ir.ui.view">
+        <field name="name">hms.admission.form</field>
+        <field name="model">hms.admission</field>
+        <field name="arch" type="xml">
+            <form string="Admission">
+                <header>
+                    <button name="action_admit" string="Admit" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_discharge" string="Discharge" type="object"
+                            class="btn-primary" invisible="state != 'admitted'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ('discharged', 'cancelled')"/>
+                    <button name="action_draft" string="Reset to Draft" type="object"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,admitted,discharged"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sale_order" type="object"
+                                class="oe_stat_button" icon="fa-money"
+                                invisible="not sale_order_id">
+                            <span class="o_stat_text">Room Charges</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Patient">
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="consultation_id"/>
+                        </group>
+                        <group string="Bed &amp; Schedule">
+                            <field name="bed_id" domain="[('state', '=', 'available')]"/>
+                            <field name="ward_id"/>
+                            <field name="admission_date"/>
+                            <field name="discharge_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Clinical" name="clinical">
+                            <group>
+                                <field name="diagnosis" placeholder="Admission diagnosis..."/>
+                                <field name="notes" placeholder="Additional notes..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="sale_order_id" invisible="1"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_admission_list" model="ir.ui.view">
+        <field name="name">hms.admission.list</field>
+        <field name="model">hms.admission</field>
+        <field name="arch" type="xml">
+            <list string="Admissions"
+                  decoration-muted="state in ('discharged', 'cancelled')"
+                  decoration-success="state == 'admitted'">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="bed_id"/>
+                <field name="ward_id"/>
+                <field name="admission_date"/>
+                <field name="discharge_date" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'admitted'"
+                       decoration-muted="state == 'discharged'"
+                       decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_admission_search" model="ir.ui.view">
+        <field name="name">hms.admission.search</field>
+        <field name="model">hms.admission</field>
+        <field name="arch" type="xml">
+            <search string="Admissions">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="bed_id"/>
+                <separator/>
+                <filter string="Currently Admitted" name="filter_admitted" domain="[('state', '=', 'admitted')]"/>
+                <filter string="Discharged" name="filter_discharged" domain="[('state', '=', 'discharged')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Ward" name="groupby_ward" context="{'group_by': 'ward_id'}"/>
+                    <filter string="Doctor" name="groupby_doctor" context="{'group_by': 'doctor_id'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hms_admission" model="ir.actions.act_window">
+        <field name="name">Admissions</field>
+        <field name="res_model">hms.admission</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Admit a patient</p>
+            <p>Create an admission to assign a bed and start daily room-charge billing.</p>
+        </field>
+    </record>
+</odoo>
