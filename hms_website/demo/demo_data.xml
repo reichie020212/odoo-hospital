@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Publish demo doctors on the website -->
+    <record id="hms_base.demo_doctor_johnson" model="hr.employee">
+        <field name="website_published" eval="True"/>
+        <field name="website_bio">&lt;p&gt;Dr. Sarah Johnson is a board-certified cardiologist with over 15 years of experience in diagnosing and treating heart conditions. She specializes in preventive cardiology, hypertension management, and echocardiography.&lt;/p&gt;</field>
+    </record>
+    <record id="hms_base.demo_doctor_lee" model="hr.employee">
+        <field name="website_published" eval="True"/>
+        <field name="website_bio">&lt;p&gt;Dr. Michael Lee is a dedicated general practitioner committed to providing comprehensive primary care. He focuses on preventive medicine, chronic disease management, and family health.&lt;/p&gt;</field>
+    </record>
+    <record id="hms_base.demo_doctor_garcia" model="hr.employee">
+        <field name="website_published" eval="True"/>
+        <field name="website_bio">&lt;p&gt;Dr. Ana Garcia is a compassionate pediatrician specializing in child development, immunizations, and adolescent medicine. She has a warm approach that puts young patients at ease.&lt;/p&gt;</field>
+    </record>
+
+    <!-- Publish demo services on the website -->
+    <record id="hms_appointment.appointment_type_general" model="hms.appointment.type">
+        <field name="website_published" eval="True"/>
+        <field name="website_description">&lt;p&gt;A comprehensive health assessment with one of our experienced physicians. Includes physical examination, vital signs check, and a personalized care plan.&lt;/p&gt;</field>
+    </record>
+    <record id="hms_appointment.appointment_type_followup" model="hms.appointment.type">
+        <field name="website_published" eval="True"/>
+        <field name="website_description">&lt;p&gt;A follow-up visit to review test results, monitor treatment progress, and adjust your care plan as needed.&lt;/p&gt;</field>
+    </record>
+    <record id="hms_appointment.appointment_type_vaccination" model="hms.appointment.type">
+        <field name="website_published" eval="True"/>
+        <field name="website_description">&lt;p&gt;Stay protected with our vaccination services. We offer routine immunizations for all ages, including flu shots, COVID-19 boosters, and travel vaccinations.&lt;/p&gt;</field>
+    </record>
+</odoo>

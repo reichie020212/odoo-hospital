@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============================================================
+         HOME PAGE
+         ============================================================ -->
+    <template id="hospital_home" name="Hospital Home">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <!-- Hero Section -->
+                <section class="s_text_image pt-5 pb-5 bg-primary text-white">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <h1 class="display-4 fw-bold">Welcome to <t t-out="company.name"/></h1>
+                                <p class="lead mt-3">Providing compassionate, world-class healthcare for you and your family. Our team of experienced doctors is here to help you live a healthier life.</p>
+                                <div class="mt-4">
+                                    <a href="/hospital/doctors" class="btn btn-light btn-lg me-2">Meet Our Doctors</a>
+                                    <a href="/my" class="btn btn-outline-light btn-lg">Patient Portal</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Preview -->
+                <section class="s_text_block pt-5 pb-5" t-if="services">
+                    <div class="container">
+                        <h2 class="text-center mb-4">Our Services</h2>
+                        <div class="row">
+                            <t t-foreach="services" t-as="service">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title" t-out="service.name"/>
+                                            <t t-if="service.website_description">
+                                                <div class="card-text text-muted" t-out="service.website_description"/>
+                                            </t>
+                                            <t t-else="">
+                                                <p class="card-text text-muted">
+                                                    Duration: <t t-out="service.default_duration"/> hour(s)
+                                                </p>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="/hospital/services" class="btn btn-primary">View All Services</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Doctors Preview -->
+                <section class="s_text_block pt-5 pb-5 bg-light" t-if="doctors">
+                    <div class="container">
+                        <h2 class="text-center mb-4">Our Doctors</h2>
+                        <div class="row">
+                            <t t-foreach="doctors" t-as="doctor">
+                                <div class="col-md-3 mb-4">
+                                    <div class="card h-100 shadow-sm text-center">
+                                        <div class="card-body">
+                                            <img t-attf-src="/web/image/hr.employee/#{doctor.id}/image_128"
+                                                 class="rounded-circle mb-3" width="96" height="96"
+                                                 t-att-alt="doctor.name"/>
+                                            <h6 class="card-title mb-1" t-out="doctor.name"/>
+                                            <small class="text-muted" t-if="doctor.specialization_id"
+                                                   t-out="doctor.specialization_id.name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="/hospital/doctors" class="btn btn-primary">Meet All Doctors</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA -->
+                <section class="s_text_block pt-5 pb-5 bg-primary text-white text-center">
+                    <div class="container">
+                        <h2>Ready to book an appointment?</h2>
+                        <p class="lead">Log in to your patient portal to view your records and appointments.</p>
+                        <a href="/my" class="btn btn-light btn-lg mt-2">Patient Portal Login</a>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         DOCTORS PAGE
+         ============================================================ -->
+    <template id="hospital_doctors" name="Our Doctors">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="pt-5 pb-5">
+                    <div class="container">
+                        <h1 class="text-center mb-2">Our Doctors</h1>
+                        <p class="text-center text-muted mb-5">Meet the experienced medical professionals dedicated to your care.</p>
+                        <div class="row">
+                            <t t-foreach="doctors" t-as="doctor">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body text-center">
+                                            <img t-attf-src="/web/image/hr.employee/#{doctor.id}/image_256"
+                                                 class="rounded-circle mb-3" width="128" height="128"
+                                                 t-att-alt="doctor.name"/>
+                                            <h5 class="card-title mb-1" t-out="doctor.name"/>
+                                            <p class="text-primary mb-2" t-if="doctor.specialization_id"
+                                               t-out="doctor.specialization_id.name"/>
+                                            <p class="text-muted small" t-if="doctor.job_title"
+                                               t-out="doctor.job_title"/>
+                                            <t t-if="doctor.website_bio">
+                                                <hr/>
+                                                <div class="text-start small" t-out="doctor.website_bio"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <t t-if="not doctors">
+                            <div class="alert alert-info text-center">
+                                No doctors are currently listed. Please check back soon.
+                            </div>
+                        </t>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         SERVICES PAGE
+         ============================================================ -->
+    <template id="hospital_services" name="Our Services">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="pt-5 pb-5">
+                    <div class="container">
+                        <h1 class="text-center mb-2">Our Services</h1>
+                        <p class="text-center text-muted mb-5">We offer a wide range of medical services to meet your healthcare needs.</p>
+                        <div class="row">
+                            <t t-foreach="services" t-as="service">
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="card-title" t-out="service.name"/>
+                                            <t t-if="service.website_description">
+                                                <div class="card-text" t-out="service.website_description"/>
+                                            </t>
+                                            <p class="text-muted mt-2">
+                                                <i class="fa fa-clock-o"/> Duration: <t t-out="service.default_duration"/> hour(s)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <t t-if="not services">
+                            <div class="alert alert-info text-center">
+                                No services are currently listed. Please check back soon.
+                            </div>
+                        </t>
+                        <div class="text-center mt-4">
+                            <a href="/my" class="btn btn-primary btn-lg">Book an Appointment</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         CONTACT PAGE
+         ============================================================ -->
+    <template id="hospital_contact" name="Contact Us">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="pt-5 pb-5">
+                    <div class="container">
+                        <h1 class="text-center mb-5">Contact Us</h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">
+                                            <i class="fa fa-hospital-o"/> <t t-out="company.name"/>
+                                        </h4>
+                                        <dl class="row mb-0">
+                                            <t t-if="company.street">
+                                                <dt class="col-sm-3"><i class="fa fa-map-marker"/> Address</dt>
+                                                <dd class="col-sm-9">
+                                                    <t t-out="company.street"/><br/>
+                                                    <t t-if="company.street2"><t t-out="company.street2"/><br/></t>
+                                                    <t t-out="company.city"/>
+                                                    <t t-if="company.state_id">, <t t-out="company.state_id.name"/></t>
+                                                    <t t-if="company.zip"> <t t-out="company.zip"/></t>
+                                                    <t t-if="company.country_id"><br/><t t-out="company.country_id.name"/></t>
+                                                </dd>
+                                            </t>
+                                            <t t-if="company.phone">
+                                                <dt class="col-sm-3"><i class="fa fa-phone"/> Phone</dt>
+                                                <dd class="col-sm-9" t-out="company.phone"/>
+                                            </t>
+                                            <t t-if="company.email">
+                                                <dt class="col-sm-3"><i class="fa fa-envelope"/> Email</dt>
+                                                <dd class="col-sm-9">
+                                                    <a t-attf-href="mailto:#{company.email}" t-out="company.email"/>
+                                                </dd>
+                                            </t>
+                                            <t t-if="company.website">
+                                                <dt class="col-sm-3"><i class="fa fa-globe"/> Website</dt>
+                                                <dd class="col-sm-9">
+                                                    <a t-att-href="company.website" t-out="company.website"/>
+                                                </dd>
+                                            </t>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">
+                                            <i class="fa fa-clock-o"/> Hours of Operation
+                                        </h4>
+                                        <table class="table table-sm">
+                                            <tr><td>Monday - Friday</td><td>8:00 AM - 6:00 PM</td></tr>
+                                            <tr><td>Saturday</td><td>9:00 AM - 1:00 PM</td></tr>
+                                            <tr><td>Sunday</td><td>Closed</td></tr>
+                                            <tr><td>Emergency</td><td class="text-danger fw-bold">24/7</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <a href="/my" class="btn btn-primary btn-lg">Patient Portal</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
