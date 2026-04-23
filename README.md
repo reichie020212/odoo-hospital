@@ -1,11 +1,24 @@
-# odoo-hospital
+# Odoo Hospital Management System
 
-## Running with Docker
+A comprehensive Hospital Management System built as custom addons for **Odoo 19 Community Edition**. Covers the full patient lifecycle: registration, appointments, consultations (EMR), lab diagnostics, pharmacy dispensing, inpatient ward management, billing with insurance co-pay, and a patient self-service portal.
 
-This repo ships a Docker Compose stack that runs Odoo 19 CE with the HMS
-modules. The base `docker-compose.yml` plus `docker-compose.override.yml`
-(auto-loaded) gives you a dev environment; `docker-compose.prod.yml` is an
-opt-in production override.
+## Modules
+
+| Module | Purpose |
+| :--- | :--- |
+| `hms_base` | Patient/staff extensions on `res.partner` and `hr.employee`, specializations, security groups |
+| `hms_appointment` | Medical appointment scheduling on `calendar.event` with 5-state workflow |
+| `hms_clinical` | EMR core — consultations, vitals, prescriptions, medical history |
+| `hms_billing` | Direct-pay invoicing from consultations via `sale.order` |
+| `hms_pharmacy` | Prescription dispensing via `stock.picking` with FEFO expiry tracking |
+| `hms_lab` | Lab test requests with panel expansion, results, abnormal-value detection |
+| `hms_inpatient` | Ward/bed management, admissions, discharge, daily room-charge CRON |
+| `hms_portal` | View-only patient portal (appointments, consultations, vitals) |
+| `hms_lab_billing` | Bridge: lab tests → sale.order *(auto-installs)* |
+| `hms_pharmacy_billing` | Bridge: dispensed medicines → sale.order *(auto-installs)* |
+| `hms_insurance` | Insurance policies, co-pay split billing |
+
+## Quick start with Docker
 
 ### One-time setup
 
@@ -16,9 +29,7 @@ cp .env.example .env
 
 ### Development
 
-The repo is bind-mounted into the container at `/mnt/extra-addons/odoo-hospital`
-and Odoo runs with `--dev=all`, so Python changes hot-reload and XML changes
-show up after a module upgrade.
+The repo is bind-mounted into the container and Odoo runs with `--dev=all`, so Python changes hot-reload and XML changes show up after a module upgrade.
 
 ```bash
 docker compose up -d              # start in the background
@@ -27,26 +38,21 @@ docker compose down               # stop (keeps volumes)
 docker compose down -v            # stop and wipe DB + filestore
 ```
 
-Then open http://localhost:8069 and create a database. Install `hms_base`
-first; `hms_appointment`, `hms_clinical`, and `hms_billing` depend on it.
+Open http://localhost:8069, create a database, and install modules. Installing `hms_insurance` pulls in the entire dependency chain — all modules install transitively.
 
-Postgres is exposed on `localhost:5433` (user `odoo`, password from `.env`)
-for `psql` access — the host port is remapped off 5432 so it does not
-conflict with a local Postgres that may already be running.
+Postgres is exposed on `localhost:5433` (user `odoo`, password from `.env`) so it doesn't conflict with a local Postgres.
 
 ### Production
 
-Production bakes the HMS modules into a local image via `Dockerfile` and
-does not expose Postgres on the host.
+Production bakes all modules into a local image via `Dockerfile` and does not expose Postgres on the host.
 
 ```bash
 # edit .env with a real POSTGRES_PASSWORD first
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 docker compose -f docker-compose.yml -f docker-compose.prod.yml logs -f odoo
-docker compose -f docker-compose.yml -f docker-compose.prod.yml down
 ```
 
-To upgrade a module after code changes, rebuild the image and run an upgrade:
+To upgrade modules after code changes:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.prod.yml build odoo
@@ -55,6 +61,35 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm odoo \
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
-Before exposing a prod instance publicly, override the dev-friendly
-defaults in `odoo.conf` — set a strong `admin_passwd` and flip `list_db`
-to `False`.
+Before exposing publicly, set a strong `admin_passwd` and flip `list_db` to `False` in `odoo.conf`.
+
+## Module dependency graph
+
+```
+hms_insurance ──► hms_billing ──► hms_clinical ──► hms_appointment ──► hms_base
+                                      │                                    │
+hms_pharmacy ──────────────────────────┘                                   │
+hms_lab ───────────────────────────────┘                                   │
+hms_inpatient ─► hms_billing ──────────┘                                   │
+hms_portal ────► hms_appointment ──────────────────────────────────────────┘
+
+hms_lab_billing ─► hms_lab + hms_billing          (auto-install bridge)
+hms_pharmacy_billing ─► hms_pharmacy + hms_billing (auto-install bridge)
+```
+
+## Tech stack
+
+- **Python** 3.12 · **Odoo** 19 CE · **PostgreSQL** 16
+- **Linter/formatter:** ruff (120-char lines, `py312`)
+- **Pre-commit:** trailing-whitespace, check-xml, ruff, ruff-format, secret detection
+- **Tests:** 140+ Odoo `TransactionCase` tests across all modules
+
+## Documentation
+
+- Each module has a `README.md` at its root describing models, views, security, and install steps.
+- Mermaid ERDs live in `docs/guide/` (committed).
+- Plans and blueprints live in `docs/plan/` (gitignored — local working artifacts).
+
+## License
+
+LGPL-3.0 — see [LICENSE](LICENSE).
