@@ -2,7 +2,7 @@
 <odoo>
     <record id="group_hms_pharmacy_user" model="res.groups">
         <field name="name">Pharmacy User</field>
-        <field name="category_id" ref="hms_base.module_category_hospital"/>
+        <field name="privilege_id" ref="hms_base.privilege_hospital"/>
         <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
         <field name="comment">Can validate dispensing pickings and read prescription lines.</field>
     </record>

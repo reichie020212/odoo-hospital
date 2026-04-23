@@ -56,7 +56,7 @@
                 <separator/>
                 <filter string="Active" name="filter_active" domain="[('active', '=', True)]"/>
                 <filter string="Archived" name="filter_inactive" domain="[('active', '=', False)]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Insurance Company" name="groupby_company"
                             context="{'group_by': 'insurance_company_id'}"/>
                     <filter string="Patient" name="groupby_patient"

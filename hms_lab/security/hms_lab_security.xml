@@ -2,7 +2,7 @@
 <odoo>
     <record id="group_hms_lab_tech" model="res.groups">
         <field name="name">Lab Technician</field>
-        <field name="category_id" ref="hms_base.module_category_hospital"/>
+        <field name="privilege_id" ref="hms_base.privilege_hospital"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="comment">Can manage lab requests and enter results. Read access to patients and consultations.</field>
     </record>

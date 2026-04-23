@@ -55,7 +55,7 @@
                 <separator/>
                 <filter string="Available" name="filter_available" domain="[('state', '=', 'available')]"/>
                 <filter string="Occupied" name="filter_occupied" domain="[('state', '=', 'occupied')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Ward" name="groupby_ward" context="{'group_by': 'ward_id'}"/>
                     <filter string="Type" name="groupby_type" context="{'group_by': 'bed_type'}"/>
                     <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>

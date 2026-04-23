@@ -95,7 +95,7 @@
                 <separator/>
                 <filter string="Currently Admitted" name="filter_admitted" domain="[('state', '=', 'admitted')]"/>
                 <filter string="Discharged" name="filter_discharged" domain="[('state', '=', 'discharged')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Ward" name="groupby_ward" context="{'group_by': 'ward_id'}"/>
                     <filter string="Doctor" name="groupby_doctor" context="{'group_by': 'doctor_id'}"/>
                     <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>

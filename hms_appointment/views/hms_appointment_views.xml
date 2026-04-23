@@ -118,7 +118,7 @@
                         domain="[('appointment_state', '=', 'done')]"/>
                 <filter string="Cancelled" name="filter_cancelled"
                         domain="[('appointment_state', '=', 'cancelled')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Doctor" name="groupby_doctor"
                             context="{'group_by': 'doctor_id'}"/>
                     <filter string="Patient" name="groupby_patient"

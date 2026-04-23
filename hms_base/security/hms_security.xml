@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Hospital application module category -->
     <record id="module_category_hospital" model="ir.module.category">
         <field name="name">Hospital</field>
         <field name="description">Hospital Management System</field>
         <field name="sequence">20</field>
     </record>
 
+    <!-- Odoo 19: res.groups uses privilege_id → res.groups.privilege → ir.module.category -->
+    <record id="privilege_hospital" model="res.groups.privilege">
+        <field name="name">Hospital</field>
+        <field name="category_id" ref="module_category_hospital"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Hospital User: clinical staff, day-to-day operations -->
     <record id="group_hms_user" model="res.groups">
         <field name="name">User</field>
-        <field name="category_id" ref="module_category_hospital"/>
+        <field name="privilege_id" ref="privilege_hospital"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+    <!-- Hospital Manager: administrative access -->
     <record id="group_hms_manager" model="res.groups">
         <field name="name">Manager</field>
-        <field name="category_id" ref="module_category_hospital"/>
+        <field name="privilege_id" ref="privilege_hospital"/>
         <field name="implied_ids" eval="[(4, ref('group_hms_user'))]"/>
-        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
     </record>
 </odoo>
