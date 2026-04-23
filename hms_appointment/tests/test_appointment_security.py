@@ -13,14 +13,14 @@ class TestAppointmentSecurity(TransactionCase):
             {
                 "name": "Appt Test User",
                 "login": "appt_test_user",
-                "groups_id": [(6, 0, [cls.env.ref("hms_base.group_hms_user").id])],
+                "group_ids": [(6, 0, [cls.env.ref("hms_base.group_hms_user").id])],
             }
         )
         cls.hms_manager = cls.env["res.users"].create(
             {
                 "name": "Appt Test Manager",
                 "login": "appt_test_manager",
-                "groups_id": [(6, 0, [cls.env.ref("hms_base.group_hms_manager").id])],
+                "group_ids": [(6, 0, [cls.env.ref("hms_base.group_hms_manager").id])],
             }
         )
 

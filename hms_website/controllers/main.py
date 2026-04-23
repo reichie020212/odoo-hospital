@@ -116,7 +116,7 @@ class HmsWebsite(http.Controller):
                     "login": values["email"],
                     "password": values["password"],
                     "partner_id": partner.id,
-                    "groups_id": [(6, 0, [portal_group.id])],
+                    "group_ids": [(6, 0, [portal_group.id])],
                 }
             )
 

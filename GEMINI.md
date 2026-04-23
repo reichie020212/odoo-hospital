@@ -146,7 +146,9 @@ All Markdown documentation is organized under the `docs/` directory, following a
 
 5. **`_sql_constraints` deprecated** — use `model.Constraint` on the class. Existing code still works but logs a warning.
 
-6. **Product types:** `type` field still accepts `service`, `consu`, `product`.
+6. **`res.users` — `groups_id` renamed to `group_ids`.** Use `group_ids` in Python and XML.
+
+7. **Product types:** `type` field still accepts `service`, `consu`, `product`.
 
 ## Project Quirks
 - **Venv**: The canonical virtual environment is located in `.venv/`.

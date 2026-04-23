@@ -151,7 +151,10 @@ These differ from Odoo 17/18 and most online tutorials. Always follow these patt
 5. **`_sql_constraints` deprecated** (warning, not error).
    Use `model.Constraint` on the model class instead. Existing `_sql_constraints` still work but log a warning.
 
-6. **Product types:** `type` field still accepts `service`, `consu`, `product`. Use `type` in XML data (not `detailed_type`).
+6. **`res.users` — `groups_id` renamed to `group_ids`.**
+   Use `"group_ids": [(6, 0, [group.id])]` in Python and `<field name="group_ids">` in XML, not `groups_id`.
+
+7. **Product types:** `type` field still accepts `service`, `consu`, `product`. Use `type` in XML data (not `detailed_type`).
 
 ## Known quirks
 

@@ -16,7 +16,7 @@ class TestClinicalSecurity(TransactionCase):
             {
                 "name": "Dr. A",
                 "login": "dr_a_sec",
-                "groups_id": [(6, 0, [cls.env.ref("hms_base.group_hms_user").id])],
+                "group_ids": [(6, 0, [cls.env.ref("hms_base.group_hms_user").id])],
             }
         )
         cls.doctor_a = cls.env["hr.employee"].create({"name": "Dr. A", "is_doctor": True, "user_id": cls.user_a.id})
@@ -26,7 +26,7 @@ class TestClinicalSecurity(TransactionCase):
             {
                 "name": "Dr. B",
                 "login": "dr_b_sec",
-                "groups_id": [(6, 0, [cls.env.ref("hms_base.group_hms_user").id])],
+                "group_ids": [(6, 0, [cls.env.ref("hms_base.group_hms_user").id])],
             }
         )
         cls.doctor_b = cls.env["hr.employee"].create({"name": "Dr. B", "is_doctor": True, "user_id": cls.user_b.id})
@@ -36,7 +36,7 @@ class TestClinicalSecurity(TransactionCase):
             {
                 "name": "HMS Manager",
                 "login": "hms_mgr_sec",
-                "groups_id": [(6, 0, [cls.env.ref("hms_base.group_hms_manager").id])],
+                "group_ids": [(6, 0, [cls.env.ref("hms_base.group_hms_manager").id])],
             }
         )
 

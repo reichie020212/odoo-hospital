@@ -17,7 +17,7 @@ class TestPortalAccess(TransactionCase):
                 "name": "Portal Patient User",
                 "login": "portal_patient_test",
                 "partner_id": cls.patient.id,
-                "groups_id": [(6, 0, [cls.env.ref("base.group_portal").id])],
+                "group_ids": [(6, 0, [cls.env.ref("base.group_portal").id])],
             }
         )
 

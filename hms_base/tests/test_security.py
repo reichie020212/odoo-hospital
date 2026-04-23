@@ -16,14 +16,14 @@ class TestHmsSecurity(TransactionCase):
             {
                 "name": "HMS Test User",
                 "login": "hms_test_user",
-                "groups_id": [(6, 0, [cls.group_user.id])],
+                "group_ids": [(6, 0, [cls.group_user.id])],
             }
         )
         cls.hms_manager = cls.env["res.users"].create(
             {
                 "name": "HMS Test Manager",
                 "login": "hms_test_manager",
-                "groups_id": [(6, 0, [cls.group_manager.id])],
+                "group_ids": [(6, 0, [cls.group_manager.id])],
             }
         )
 

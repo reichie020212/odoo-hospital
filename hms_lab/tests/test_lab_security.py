@@ -13,7 +13,7 @@ class TestLabSecurity(TransactionCase):
             {
                 "name": "Lab Tech",
                 "login": "lab_tech_test",
-                "groups_id": [(6, 0, [cls.env.ref("hms_lab.group_hms_lab_tech").id])],
+                "group_ids": [(6, 0, [cls.env.ref("hms_lab.group_hms_lab_tech").id])],
             }
         )
         cls.patient = cls.env["res.partner"].create({"name": "Sec Patient", "is_patient": True})
