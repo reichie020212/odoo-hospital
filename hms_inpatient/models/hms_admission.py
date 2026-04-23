@@ -21,6 +21,7 @@ class HmsAdmission(models.Model):
         required=True,
         domain=[("is_patient", "=", True)],
         tracking=True,
+        index=True,
     )
     doctor_id = fields.Many2one(
         "hr.employee",
@@ -28,6 +29,7 @@ class HmsAdmission(models.Model):
         required=True,
         domain=[("is_doctor", "=", True)],
         tracking=True,
+        index=True,
     )
     bed_id = fields.Many2one(
         "hms.bed",

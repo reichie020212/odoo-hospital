@@ -10,11 +10,13 @@ class CalendarEvent(models.Model):
         "res.partner",
         string="Patient",
         domain=[("is_patient", "=", True)],
+        index=True,
     )
     doctor_id = fields.Many2one(
         "hr.employee",
         string="Doctor",
         domain=[("is_doctor", "=", True)],
+        index=True,
     )
     appointment_type_id = fields.Many2one(
         "hms.appointment.type",

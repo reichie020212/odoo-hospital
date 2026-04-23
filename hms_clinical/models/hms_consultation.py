@@ -20,6 +20,7 @@ class HmsConsultation(models.Model):
         required=True,
         domain=[("is_patient", "=", True)],
         tracking=True,
+        index=True,
     )
     doctor_id = fields.Many2one(
         "hr.employee",
@@ -27,6 +28,7 @@ class HmsConsultation(models.Model):
         required=True,
         domain=[("is_doctor", "=", True)],
         tracking=True,
+        index=True,
         default=lambda self: self._default_doctor_id(),
     )
     appointment_id = fields.Many2one(
