@@ -36,10 +36,13 @@ erDiagram
         int id PK
         int consultation_id FK "required, cascade"
         int product_id FK "required"
+        float qty "default 1.0"
         varchar dosage
         varchar frequency
         int duration_days
         text instructions
+        selection dispensing_state "pending | dispensed (added by hms_pharmacy)"
+        int move_id FK "stock.move (added by hms_pharmacy)"
     }
 
     res_partner {
