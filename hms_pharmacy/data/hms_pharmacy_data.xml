@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Pharmacy stock location (child of the main warehouse stock) -->
+    <record id="location_pharmacy" model="stock.location">
+        <field name="name">Pharmacy</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="removal_strategy_id" ref="product_expiry.removal_fefo"/>
+    </record>
+
+    <!-- Dispensing picking type (outgoing, Pharmacy → Customer) -->
+    <record id="picking_type_dispensing" model="stock.picking.type">
+        <field name="name">Dispensing</field>
+        <field name="code">outgoing</field>
+        <field name="sequence_code">DISP</field>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="default_location_src_id" ref="location_pharmacy"/>
+        <field name="default_location_dest_id" ref="stock.stock_location_customers"/>
+    </record>
+</odoo>

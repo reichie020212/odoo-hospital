@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add Dispense button and smart button to consultation form -->
+    <record id="view_hms_consultation_form_inherit_pharmacy" model="ir.ui.view">
+        <field name="name">hms.consultation.form.inherit.hms_pharmacy</field>
+        <field name="model">hms.consultation</field>
+        <field name="inherit_id" ref="hms_clinical.view_hms_consultation_form"/>
+        <field name="arch" type="xml">
+            <!-- Dispense button in header -->
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_create_dispensing"
+                        string="Dispense"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'done'"/>
+            </xpath>
+            <!-- Dispensing smart button in the shared button_box from hms_clinical -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_dispensing" type="object"
+                        class="oe_stat_button" icon="fa-medkit"
+                        invisible="dispensing_count == 0">
+                    <field name="dispensing_count" widget="statinfo" string="Dispensing"/>
+                </button>
+            </xpath>
+            <!-- Add dispensing_state badge to prescription inline list -->
+            <xpath expr="//field[@name='prescription_line_ids']/list/field[@name='instructions']" position="after">
+                <field name="dispensing_state" widget="badge"
+                       decoration-warning="dispensing_state == 'pending'"
+                       decoration-success="dispensing_state == 'dispensed'"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
