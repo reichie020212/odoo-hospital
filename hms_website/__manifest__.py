@@ -19,5 +19,6 @@ the patient portal via login/CTA buttons.
     "demo": [
         "demo/demo_data.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
 }
