@@ -130,6 +130,27 @@ Rules:
 - **Always sign commits with both `-s` and `-S`** (e.g. `git commit -s -S -m "..."`). `-s` adds the `Signed-off-by` trailer; `-S` GPG-signs the commit. This applies to every commit in this repo, no exceptions.
 - **Do not add yourself as a co-author.** No `Co-Authored-By: Claude ...` trailer, no "Generated with Claude Code" footer, no attribution of any kind in the commit message. The `Signed-off-by` line from `-s` belongs to Red, not to you.
 
+## Odoo 19 breaking changes (verified against odoo:19.0 Docker image)
+
+These differ from Odoo 17/18 and most online tutorials. Always follow these patterns:
+
+1. **`res.groups` — no `category_id`, use `privilege_id`.**
+   Odoo 19 restructured the group hierarchy: `ir.module.category` → `res.groups.privilege` → `res.groups`. Create a `res.groups.privilege` record first, then set `privilege_id` on each `res.groups` record. Never use `category_id` on `res.groups` — it doesn't exist.
+
+2. **`res.groups` — `users` field renamed to `user_ids`.**
+   Use `<field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>`, not `users`.
+
+3. **Search views — `expand` attribute removed from `<group>`.**
+   Use `<group>` (no attributes) for group-by filters in search views. The old `<group expand="0" string="Group By">` raises a validation error.
+
+4. **`ir.cron` — `numbercall` field removed.**
+   CRONs run indefinitely by default. Remove any `<field name="numbercall">` from XML data.
+
+5. **`_sql_constraints` deprecated** (warning, not error).
+   Use `model.Constraint` on the model class instead. Existing `_sql_constraints` still work but log a warning.
+
+6. **Product types:** `type` field still accepts `service`, `consu`, `product`. Use `type` in XML data (not `detailed_type`).
+
 ## Known quirks
 
 - The canonical venv is `.venv/`, which `.gitignore` already covers.
