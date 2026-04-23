@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============================================================
+         Portal homepage: add Appointments and Consultations counters
+         ============================================================ -->
+    <template id="portal_my_home_hms" name="HMS Portal Home"
+              inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/hms_portal/static/description/icon.png'"/>
+                <t t-set="title">Appointments</t>
+                <t t-set="url">/my/appointments</t>
+                <t t-set="text">View your medical appointments</t>
+                <t t-set="placeholder_count" t-value="'appointment_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/hms_portal/static/description/icon.png'"/>
+                <t t-set="title">Consultations</t>
+                <t t-set="url">/my/consultations</t>
+                <t t-set="text">View your medical consultations and records</t>
+                <t t-set="placeholder_count" t-value="'consultation_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ============================================================
+         Appointment list
+         ============================================================ -->
+    <template id="portal_my_appointments" name="My Appointments">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="1"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Appointments</t>
+            </t>
+            <t t-if="appointments">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="appointments" t-as="appt">
+                                <tr>
+                                    <td>
+                                        <a t-attf-href="/my/appointments/#{appt.id}">
+                                            <t t-out="appt.start" t-options="{'widget': 'datetime'}"/>
+                                        </a>
+                                    </td>
+                                    <td t-out="appt.doctor_id.name"/>
+                                    <td t-out="appt.appointment_type_id.name or '-'"/>
+                                    <td>
+                                        <span t-attf-class="badge rounded-pill #{
+                                            'text-bg-info' if appt.appointment_state == 'draft'
+                                            else 'text-bg-primary' if appt.appointment_state == 'confirmed'
+                                            else 'text-bg-success' if appt.appointment_state == 'done'
+                                            else 'text-bg-danger' if appt.appointment_state == 'cancelled'
+                                            else 'text-bg-warning'
+                                        }">
+                                            <t t-out="dict(appt._fields['appointment_state'].selection).get(appt.appointment_state)"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="alert alert-info" role="alert">
+                    You have no appointments yet.
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         Appointment detail
+         ============================================================ -->
+    <template id="portal_my_appointment" name="Appointment Detail">
+        <t t-call="portal.portal_layout">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        Appointment — <t t-out="appointment.start" t-options="{'widget': 'datetime'}"/>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">Doctor</dt>
+                        <dd class="col-sm-9" t-out="appointment.doctor_id.name"/>
+                        <dt class="col-sm-3">Type</dt>
+                        <dd class="col-sm-9" t-out="appointment.appointment_type_id.name or '-'"/>
+                        <dt class="col-sm-3">Status</dt>
+                        <dd class="col-sm-9" t-out="dict(appointment._fields['appointment_state'].selection).get(appointment.appointment_state)"/>
+                        <dt class="col-sm-3">Duration</dt>
+                        <dd class="col-sm-9"><t t-out="appointment.duration"/> hour(s)</dd>
+                    </dl>
+                </div>
+            </div>
+            <a href="/my/appointments" class="btn btn-secondary">Back to Appointments</a>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         Consultation list
+         ============================================================ -->
+    <template id="portal_my_consultations" name="My Consultations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="1"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Consultations</t>
+            </t>
+            <t t-if="consultations">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Diagnosis</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="consultations" t-as="cons">
+                                <tr>
+                                    <td>
+                                        <a t-attf-href="/my/consultations/#{cons.id}">
+                                            <t t-out="cons.name"/>
+                                        </a>
+                                    </td>
+                                    <td t-out="cons.date" t-options="{'widget': 'datetime'}"/>
+                                    <td t-out="cons.doctor_id.name"/>
+                                    <td t-out="(cons.diagnosis or '-')[:80]"/>
+                                    <td>
+                                        <span t-attf-class="badge rounded-pill #{
+                                            'text-bg-info' if cons.state == 'draft'
+                                            else 'text-bg-primary' if cons.state == 'in_progress'
+                                            else 'text-bg-success' if cons.state == 'done'
+                                            else 'text-bg-danger'
+                                        }">
+                                            <t t-out="dict(cons._fields['state'].selection).get(cons.state)"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="alert alert-info" role="alert">
+                    You have no consultations yet.
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         Consultation detail (with vitals and prescription)
+         ============================================================ -->
+    <template id="portal_my_consultation" name="Consultation Detail">
+        <t t-call="portal.portal_layout">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4 class="mb-0"><t t-out="consultation.name"/></h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">Date</dt>
+                        <dd class="col-sm-9" t-out="consultation.date" t-options="{'widget': 'datetime'}"/>
+                        <dt class="col-sm-3">Doctor</dt>
+                        <dd class="col-sm-9" t-out="consultation.doctor_id.name"/>
+                        <dt class="col-sm-3">Status</dt>
+                        <dd class="col-sm-9" t-out="dict(consultation._fields['state'].selection).get(consultation.state)"/>
+                        <dt class="col-sm-3">Chief Complaint</dt>
+                        <dd class="col-sm-9" t-out="consultation.chief_complaint or '-'"/>
+                        <dt class="col-sm-3">Diagnosis</dt>
+                        <dd class="col-sm-9" t-out="consultation.diagnosis or '-'"/>
+                        <dt class="col-sm-3">Treatment Plan</dt>
+                        <dd class="col-sm-9" t-out="consultation.treatment_plan or '-'"/>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Vitals -->
+            <t t-if="consultation.vital_ids">
+                <div class="card mb-3">
+                    <div class="card-header"><h5 class="mb-0">Vitals</h5></div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>BP (sys/dia)</th>
+                                    <th>HR</th>
+                                    <th>Temp</th>
+                                    <th>SpO2</th>
+                                    <th>Weight</th>
+                                    <th>Height</th>
+                                    <th>BMI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="consultation.vital_ids" t-as="v">
+                                    <tr>
+                                        <td><t t-out="v.bp_systolic"/>/<t t-out="v.bp_diastolic"/></td>
+                                        <td t-out="v.heart_rate"/>
+                                        <td><t t-out="v.temperature"/> °C</td>
+                                        <td><t t-out="v.spo2"/>%</td>
+                                        <td><t t-out="v.weight"/> kg</td>
+                                        <td><t t-out="v.height"/> cm</td>
+                                        <td t-out="'%.1f' % v.bmi if v.bmi else '-'"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+
+            <!-- Prescription -->
+            <t t-if="consultation.prescription_line_ids">
+                <div class="card mb-3">
+                    <div class="card-header"><h5 class="mb-0">Prescription</h5></div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Medicine</th>
+                                    <th>Qty</th>
+                                    <th>Dosage</th>
+                                    <th>Frequency</th>
+                                    <th>Days</th>
+                                    <th>Instructions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="consultation.prescription_line_ids" t-as="rx">
+                                    <tr>
+                                        <td t-out="rx.product_id.name"/>
+                                        <td t-out="rx.qty"/>
+                                        <td t-out="rx.dosage or '-'"/>
+                                        <td t-out="rx.frequency or '-'"/>
+                                        <td t-out="rx.duration_days or '-'"/>
+                                        <td t-out="rx.instructions or '-'"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+
+            <a href="/my/consultations" class="btn btn-secondary">Back to Consultations</a>
+        </t>
+    </template>
+</odoo>

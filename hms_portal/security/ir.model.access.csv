@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_calendar_event_portal,calendar.event.portal,calendar.model_calendar_event,base.group_portal,1,0,0,0
+access_hms_consultation_portal,hms.consultation.portal,hms_clinical.model_hms_consultation,base.group_portal,1,0,0,0
+access_hms_vital_portal,hms.vital.portal,hms_clinical.model_hms_vital,base.group_portal,1,0,0,0
+access_hms_prescription_line_portal,hms.prescription.line.portal,hms_clinical.model_hms_prescription_line,base.group_portal,1,0,0,0
+access_hms_appointment_type_portal,hms.appointment.type.portal,hms_appointment.model_hms_appointment_type,base.group_portal,1,0,0,0
