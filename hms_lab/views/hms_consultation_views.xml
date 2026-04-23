@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_consultation_form_inherit_lab" model="ir.ui.view">
+        <field name="name">hms.consultation.form.inherit.hms_lab</field>
+        <field name="model">hms.consultation</field>
+        <field name="inherit_id" ref="hms_clinical.view_hms_consultation_form"/>
+        <field name="arch" type="xml">
+            <!-- Request Lab Tests button in header -->
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_create_lab_request"
+                        string="Request Lab Tests"
+                        type="object"
+                        invisible="state not in ('in_progress', 'done')"/>
+            </xpath>
+            <!-- Lab Request smart button in shared button_box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_lab_requests" type="object"
+                        class="oe_stat_button" icon="fa-flask"
+                        invisible="lab_request_count == 0">
+                    <field name="lab_request_count" widget="statinfo" string="Lab Requests"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

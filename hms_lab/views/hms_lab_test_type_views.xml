@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_lab_test_type_list" model="ir.ui.view">
+        <field name="name">hms.lab.test.type.list</field>
+        <field name="model">hms.lab.test.type</field>
+        <field name="arch" type="xml">
+            <list string="Lab Test Types">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="is_panel"/>
+                <field name="unit"/>
+                <field name="normal_range_min" optional="show"/>
+                <field name="normal_range_max" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hms_lab_test_type_form" model="ir.ui.view">
+        <field name="name">hms.lab.test.type.form</field>
+        <field name="model">hms.lab.test.type</field>
+        <field name="arch" type="xml">
+            <form string="Lab Test Type">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="is_panel"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group invisible="is_panel">
+                            <field name="unit"/>
+                            <field name="normal_range_min"/>
+                            <field name="normal_range_max"/>
+                            <field name="parent_id"/>
+                        </group>
+                    </group>
+                    <group string="Panel Tests" invisible="not is_panel">
+                        <field name="child_ids" nolabel="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="unit"/>
+                                <field name="normal_range_min"/>
+                                <field name="normal_range_max"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_lab_test_type_search" model="ir.ui.view">
+        <field name="name">hms.lab.test.type.search</field>
+        <field name="model">hms.lab.test.type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <separator/>
+                <filter string="Panels" name="filter_panels" domain="[('is_panel', '=', True)]"/>
+                <filter string="Individual" name="filter_individual" domain="[('is_panel', '=', False)]"/>
+                <filter string="Archived" name="filter_inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hms_lab_test_type" model="ir.actions.act_window">
+        <field name="name">Lab Test Types</field>
+        <field name="res_model">hms.lab.test.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define a lab test type</p>
+            <p>Create individual tests with normal ranges, or panels that group multiple tests.</p>
+        </field>
+    </record>
+</odoo>

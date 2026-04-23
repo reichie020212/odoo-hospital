@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_hms_lab_request"
+              name="Lab Requests"
+              parent="hms_base.menu_hms_root"
+              action="action_hms_lab_request"
+              sequence="40"/>
+
+    <menuitem id="menu_hms_lab_test_type"
+              name="Lab Test Types"
+              parent="hms_base.menu_hms_configuration"
+              action="action_hms_lab_test_type"
+              sequence="40"/>
+</odoo>

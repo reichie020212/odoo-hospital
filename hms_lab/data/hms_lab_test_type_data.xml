@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Individual tests -->
+    <record id="test_type_blood_glucose" model="hms.lab.test.type">
+        <field name="name">Blood Glucose (Fasting)</field>
+        <field name="code">GLU</field>
+        <field name="unit">mg/dL</field>
+        <field name="normal_range_min">70</field>
+        <field name="normal_range_max">100</field>
+    </record>
+    <record id="test_type_hemoglobin" model="hms.lab.test.type">
+        <field name="name">Hemoglobin</field>
+        <field name="code">HGB</field>
+        <field name="unit">g/dL</field>
+        <field name="normal_range_min">12.0</field>
+        <field name="normal_range_max">17.5</field>
+    </record>
+    <record id="test_type_urine_analysis" model="hms.lab.test.type">
+        <field name="name">Urine Analysis</field>
+        <field name="code">UA</field>
+    </record>
+
+    <!-- CBC Panel -->
+    <record id="test_type_cbc" model="hms.lab.test.type">
+        <field name="name">Complete Blood Count (CBC)</field>
+        <field name="code">CBC</field>
+        <field name="is_panel" eval="True"/>
+    </record>
+    <record id="test_type_wbc" model="hms.lab.test.type">
+        <field name="name">White Blood Cells (WBC)</field>
+        <field name="code">WBC</field>
+        <field name="unit">×10³/μL</field>
+        <field name="normal_range_min">4.5</field>
+        <field name="normal_range_max">11.0</field>
+        <field name="parent_id" ref="test_type_cbc"/>
+    </record>
+    <record id="test_type_rbc" model="hms.lab.test.type">
+        <field name="name">Red Blood Cells (RBC)</field>
+        <field name="code">RBC</field>
+        <field name="unit">×10⁶/μL</field>
+        <field name="normal_range_min">4.5</field>
+        <field name="normal_range_max">5.5</field>
+        <field name="parent_id" ref="test_type_cbc"/>
+    </record>
+    <record id="test_type_platelets" model="hms.lab.test.type">
+        <field name="name">Platelets</field>
+        <field name="code">PLT</field>
+        <field name="unit">×10³/μL</field>
+        <field name="normal_range_min">150</field>
+        <field name="normal_range_max">400</field>
+        <field name="parent_id" ref="test_type_cbc"/>
+    </record>
+    <record id="test_type_hematocrit" model="hms.lab.test.type">
+        <field name="name">Hematocrit</field>
+        <field name="code">HCT</field>
+        <field name="unit">%</field>
+        <field name="normal_range_min">36</field>
+        <field name="normal_range_max">54</field>
+        <field name="parent_id" ref="test_type_cbc"/>
+    </record>
+</odoo>
