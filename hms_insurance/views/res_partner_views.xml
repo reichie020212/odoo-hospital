@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add is_insurance_company to partner form -->
+    <record id="view_partner_form_inherit_hms_insurance" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.hms_insurance</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hms_medical']" position="after">
+                <page string="Insurance" name="hms_insurance" invisible="not is_patient">
+                    <field name="insurance_policy_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="insurance_company_id"/>
+                            <field name="coverage_percentage"/>
+                            <field name="valid_from"/>
+                            <field name="valid_until"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//sheet//notebook" position="inside">
+                <page string="Insurance Settings" name="hms_insurance_settings"
+                      invisible="is_patient">
+                    <group>
+                        <field name="is_insurance_company"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
