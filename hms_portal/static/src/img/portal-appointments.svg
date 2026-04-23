@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+  <!-- Calendar body -->
+  <rect x="12" y="18" width="56" height="48" rx="6" fill="#E8EDF5" stroke="#B8C9E0" stroke-width="1.5"/>
+  <!-- Calendar header bar -->
+  <rect x="12" y="18" width="56" height="14" rx="6" fill="#C5D4E8"/>
+  <rect x="12" y="26" width="56" height="6" fill="#C5D4E8"/>
+  <!-- Calendar hooks -->
+  <rect x="26" y="13" width="4" height="10" rx="2" fill="#8BA4C4"/>
+  <rect x="50" y="13" width="4" height="10" rx="2" fill="#8BA4C4"/>
+  <!-- Calendar grid dots (appointments) -->
+  <circle cx="28" cy="42" r="3" fill="#8BA4C4"/>
+  <circle cx="40" cy="42" r="3" fill="#8BA4C4"/>
+  <circle cx="52" cy="42" r="3" fill="#8BA4C4"/>
+  <circle cx="28" cy="54" r="3" fill="#8BA4C4"/>
+  <circle cx="40" cy="54" r="3" fill="#7C3AED" opacity="0.7"/>
+  <circle cx="52" cy="54" r="3" fill="#8BA4C4"/>
+  <!-- Clock overlay -->
+  <circle cx="58" cy="58" r="14" fill="white" stroke="#8BA4C4" stroke-width="1.5"/>
+  <line x1="58" y1="58" x2="58" y2="50" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
+  <line x1="58" y1="58" x2="64" y2="58" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="58" cy="58" r="1.5" fill="#7C3AED"/>
+</svg>

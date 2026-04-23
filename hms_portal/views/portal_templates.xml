@@ -12,18 +12,45 @@
         <!-- Add HMS entries inside the service category -->
         <div id="portal_service_category" position="inside">
             <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/hms_portal/static/src/img/portal-appointments.svg'"/>
                 <t t-set="title">Appointments</t>
                 <t t-set="url">/my/appointments</t>
                 <t t-set="text">View your medical appointments</t>
                 <t t-set="config_card" t-value="True"/>
             </t>
             <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/hms_portal/static/src/img/portal-consultations.svg'"/>
                 <t t-set="title">Consultations</t>
                 <t t-set="url">/my/consultations</t>
                 <t t-set="text">View your medical consultations and records</t>
                 <t t-set="config_card" t-value="True"/>
             </t>
         </div>
+    </template>
+
+    <!-- ============================================================
+         Breadcrumbs for HMS portal pages
+         ============================================================ -->
+    <template id="portal_breadcrumbs_hms" name="HMS Portal Breadcrumbs"
+              inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'appointments'"
+                t-attf-class="breadcrumb-item #{'active' if not appointment else ''}">
+                <a t-if="appointment" href="/my/appointments">Appointments</a>
+                <t t-else="">Appointments</t>
+            </li>
+            <li t-if="appointment" class="breadcrumb-item active">
+                <t t-out="appointment.name or 'Appointment'"/>
+            </li>
+            <li t-if="page_name == 'consultations'"
+                t-attf-class="breadcrumb-item #{'active' if not consultation else ''}">
+                <a t-if="consultation" href="/my/consultations">Consultations</a>
+                <t t-else="">Consultations</t>
+            </li>
+            <li t-if="consultation" class="breadcrumb-item active">
+                <t t-out="consultation.name or 'Consultation'"/>
+            </li>
+        </xpath>
     </template>
 
     <!-- ============================================================
