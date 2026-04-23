@@ -101,7 +101,8 @@ When adding an Odoo addon, follow the standard Odoo 19 layout:
 - `models/` — Python business logic; inherit from `models.Model` or `models.TransientModel`.
 - `views/` — XML for backend views (form, tree, kanban) and menus.
 - `security/` — `ir.model.access.csv` and XML record rules.
-- `data/` — XML for default data or sequences.
+- `data/` — XML for default/seed data or sequences (always loaded on install).
+- `demo/` — XML for demo data (only loaded when the database has "Demo Data" enabled).
 - `__manifest__.py`, `__init__.py`, and `README.md` at the module root.
 
 Conventions:
@@ -111,6 +112,7 @@ Conventions:
 3. **PEP8-compliant, 120-char lines** — pre-commit will catch formatting, but write clean code up front.
 4. **Every module must have a `README.md`.** Create one at the module root (sibling of `__manifest__.py`) the moment a new module is scaffolded, and **keep it updated** whenever the module's purpose, models, views, security model, or external dependencies change. This README is committed and ships with the module — it is not optional and is distinct from the "no auto-README in `docs/plan/` or `docs/guide/`" rule above. Minimum sections: module name + one-line purpose, what it provides (models/views/menus added), dependencies, and any setup/configuration steps.
 5. **Every module must have a Mermaid ERD.** Each module has a corresponding `docs/guide/<module>-erd.md` file containing a Mermaid `erDiagram` showing its models, fields, and relationships. **Keep it updated** whenever models, fields, or relationships are added, removed, or changed — this includes changes made by later modules that extend the same models. If a change in module B adds fields or relationships to a model defined in module A, update module A's ERD as well.
+6. **Every module must have demo data.** Each module must include a `demo/` directory with XML files providing realistic sample records (patients, doctors, appointments, consultations, etc.) that showcase the module's features. Demo files are listed under the `demo` key in `__manifest__.py` (not `data`) — they only load when the database has "Demo Data" enabled. **Keep demo data updated** when new features or fields are added. Demo data should be realistic and interconnected across modules (e.g. a demo patient should have appointments, consultations, vitals, prescriptions, lab requests, etc.) so the system looks "alive" on first install. Use `noupdate="1"` in demo XML. Demo records from upstream modules (e.g. demo patients from `hms_base`) should be referenced by external ID in downstream modules (e.g. `hms_appointment` demo appointments reference `hms_base.demo_patient_*`).
 
 ## Documentation conventions
 

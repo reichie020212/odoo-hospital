@@ -96,7 +96,8 @@ When adding new Odoo modules, follow these standards:
 - `models/`: Python business logic (inherit from `models.Model`).
 - `views/`: XML for backend views (form, tree, kanban) and menus.
 - `security/`: `ir.model.access.csv` and XML record rules.
-- `data/`: XML for default data or sequences.
+- `data/`: XML for default/seed data or sequences (always loaded on install).
+- `demo/`: XML for demo data (only loaded when "Demo Data" is enabled on the database).
 - `__manifest__.py`, `__init__.py`, and `README.md` at the module root.
 
 ### Naming & Style
@@ -110,6 +111,7 @@ When adding new Odoo modules, follow these standards:
    - Core Features (models, views, and menus provided).
    - Dependencies (both Odoo modules and external libraries).
    - Setup/Configuration instructions.
+5. **Mandatory Demo Data**: Every module must include a `demo/` directory with XML files providing realistic sample records that showcase the module's features. Demo files go under the `demo` key in `__manifest__.py` (not `data`) and only load when "Demo Data" is enabled. When designing Blueprints, include a demo-data section specifying what sample records should be created and how they interconnect with upstream modules (reference by external ID). Demo data should make the system look "alive" on first install — a few patients with appointments, consultations with vitals and prescriptions, lab requests with results, etc.
 
 ## Documentation Conventions
 All Markdown documentation is organized under the `docs/` directory, following a strict separation of concerns based on whether the content is a working artifact or a project deliverable.
