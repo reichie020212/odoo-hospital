@@ -156,6 +156,12 @@ These differ from Odoo 17/18 and most online tutorials. Always follow these patt
 
 7. **Product types:** `type` field still accepts `service`, `consu`, `product`. Use `type` in XML data (not `detailed_type`).
 
+8. **Portal homepage entries** use a categorized layout in Odoo 19.
+   - Entries go inside category divs (`portal_client_category`, `portal_service_category`, etc.), NOT directly inside `o_portal_docs`.
+   - Enable a category with `<t t-set="portal_service_category_enable" t-value="True"/>` before `o_portal_docs`.
+   - Add entries via `<div id="portal_service_category" position="inside">`.
+   - Cards default to `d-none` (hidden) and are revealed by JS counter loading. Use `<t t-set="config_card" t-value="True"/>` to always show a card (like Addresses/Connection & Security).
+
 ## Known quirks
 
 - The canonical venv is `.venv/`, which `.gitignore` already covers.

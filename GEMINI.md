@@ -150,6 +150,8 @@ All Markdown documentation is organized under the `docs/` directory, following a
 
 7. **Product types:** `type` field still accepts `service`, `consu`, `product`.
 
+8. **Portal homepage** uses categorized sections (`portal_client_category`, `portal_service_category`, etc.) with `d-none` cards revealed by JS. Use `config_card=True` for always-visible cards. Entries must go inside a category div, not directly in `o_portal_docs`.
+
 ## Project Quirks
 - **Venv**: The canonical virtual environment is located in `.venv/`.
 - A legacy `main.py` placeholder exists at the repo root from the initial scaffold. It is not used by any module.
