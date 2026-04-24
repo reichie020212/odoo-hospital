@@ -15,4 +15,10 @@
               parent="menu_hms_configuration"
               action="action_hms_specialization"
               sequence="10"/>
+
+    <menuitem id="menu_hms_create_staff"
+              name="Create Staff Member"
+              parent="menu_hms_configuration"
+              action="action_create_staff_wizard"
+              sequence="20"/>
 </odoo>

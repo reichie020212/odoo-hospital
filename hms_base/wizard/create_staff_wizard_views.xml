@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form view for the staff creation wizard -->
+    <record id="view_create_staff_wizard_form" model="ir.ui.view">
+        <field name="name">hms.create.staff.wizard.form</field>
+        <field name="model">hms.create.staff.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Staff Member">
+                <group>
+                    <group string="Identity">
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="job_title"/>
+                    </group>
+                    <group string="Clinical Role">
+                        <field name="role"/>
+                        <field name="specialization_id"
+                               invisible="role != 'doctor'"/>
+                        <field name="license_no"/>
+                        <field name="group_level"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_create" string="Create Staff"
+                            type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open the wizard -->
+    <record id="action_create_staff_wizard" model="ir.actions.act_window">
+        <field name="name">Create Staff Member</field>
+        <field name="res_model">hms.create.staff.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
