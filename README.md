@@ -14,6 +14,7 @@ A comprehensive Hospital Management System built as custom addons for **Odoo 19 
 | `hms_lab` | Lab test requests with panel expansion, results, abnormal-value detection |
 | `hms_inpatient` | Ward/bed management, admissions, discharge, daily room-charge CRON |
 | `hms_portal` | View-only patient portal (appointments, consultations, vitals) |
+| `hms_website` | Public hospital website with doctor profiles, services, and contact page |
 | `hms_lab_billing` | Bridge: lab tests → sale.order *(auto-installs)* |
 | `hms_pharmacy_billing` | Bridge: dispensed medicines → sale.order *(auto-installs)* |
 | `hms_insurance` | Insurance policies, co-pay split billing |
@@ -88,6 +89,7 @@ hms_pharmacy ──────────────────────�
 hms_lab ───────────────────────────────┘                                   │
 hms_inpatient ─► hms_billing ──────────┘                                   │
 hms_portal ────► hms_appointment ──────────────────────────────────────────┘
+hms_website ───► hms_appointment ──────────────────────────────────────────┘  (also depends on `website`)
 
 hms_lab_billing ─► hms_lab + hms_billing          (auto-install bridge)
 hms_pharmacy_billing ─► hms_pharmacy + hms_billing (auto-install bridge)

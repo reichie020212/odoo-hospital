@@ -6,7 +6,7 @@ This project is a Hospital Management System for **Odoo 19 Community Edition** â
 - **Purpose**: Hospital Management System for Odoo 19 CE.
 - **Repository Structure**: This repository resides in Odoo's custom addons path (`~/odoo/custom_addons/`). Each module is a sibling subdirectory with its own `__manifest__.py` and `__init__.py`.
 - **Current State**: Feature-complete system with 12 modules, 140+ tests, Docker Compose setup (dev + prod).
-- **Modules**: `hms_base`, `hms_appointment`, `hms_clinical`, `hms_billing`, `hms_pharmacy`, `hms_lab`, `hms_inpatient`, `hms_portal`, `hms_lab_billing` (auto-install bridge), `hms_pharmacy_billing` (auto-install bridge), `hms_insurance`.
+- **Modules**: `hms_base`, `hms_appointment`, `hms_clinical`, `hms_billing`, `hms_pharmacy`, `hms_lab`, `hms_inpatient`, `hms_portal`, `hms_website`, `hms_lab_billing` (auto-install bridge), `hms_pharmacy_billing` (auto-install bridge), `hms_insurance`.
 - **Odoo CE modules reused**: `res.partner`, `hr.employee`, `calendar.event`, `product.product`, `sale.order`, `account.move`, `stock.picking`, `stock.lot`, `mail.thread`, `portal`.
 
 ## Division of Labor
