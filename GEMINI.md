@@ -152,6 +152,9 @@ All Markdown documentation is organized under the `docs/` directory, following a
 
 8. **Portal homepage** uses categorized sections (`portal_client_category`, `portal_service_category`, etc.) with `d-none` cards revealed by JS. Use `config_card=True` for always-visible cards. Entries must go inside a category div, not directly in `o_portal_docs`.
 
+9. **`longpolling_port` removed — use `gevent_port`.**
+   Odoo 19 dropped the `longpolling_port` config key; the long-polling/websocket worker now binds to `gevent_port` (default `8072`). Blueprints must specify `gevent_port` in `odoo.conf` (never `longpolling_port`), and any reverse-proxy guidance should forward `/websocket` (and `/longpolling/` for back-compat) to that port. Setting `longpolling_port` in Odoo 19 is silently ignored and breaks live chat / bus notifications.
+
 ## Project Quirks
 - **Venv**: The canonical virtual environment is located in `.venv/`.
 - A legacy `main.py` placeholder exists at the repo root from the initial scaffold. It is not used by any module.
