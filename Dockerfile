@@ -21,6 +21,9 @@ COPY --chown=odoo:odoo hms_pharmacy_billing /mnt/extra-addons/odoo-hospital/hms_
 # Insurance
 COPY --chown=odoo:odoo hms_insurance        /mnt/extra-addons/odoo-hospital/hms_insurance
 
+# Public website
+COPY --chown=odoo:odoo hms_website          /mnt/extra-addons/odoo-hospital/hms_website
+
 # Config
 COPY --chown=odoo:odoo odoo.conf            /etc/odoo/odoo.conf
 
