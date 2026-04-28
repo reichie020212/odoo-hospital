@@ -42,6 +42,22 @@ Open http://localhost:8069, create a database, and install modules. Installing `
 
 Postgres is exposed on `localhost:5433` (user `odoo`, password from `.env`) so it doesn't conflict with a local Postgres.
 
+### Demo data
+
+Demo data is **not** loaded by default. To install (or upgrade) modules with demo data — realistic sample patients, appointments, consultations, prescriptions, lab requests, etc., useful for evaluation and screenshots — pass `--with-demo` to `odoo-bin`:
+
+```bash
+# Dev — fresh DB with demo data (install all modules transitively via hms_insurance)
+docker compose run --rm odoo \
+    odoo -c /etc/odoo/odoo.conf -d hms_dev -i hms_insurance --with-demo --stop-after-init
+
+# Prod — same, against the prod stack
+docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm odoo \
+    odoo -c /etc/odoo/odoo.conf -d hms_prod -i hms_insurance --with-demo --stop-after-init
+```
+
+Then start the stack normally with `docker compose up -d`. Omit `--with-demo` (or use `--without-demo=all`) for a clean production database.
+
 ### Production
 
 Production bakes all modules into a local image via `Dockerfile` and does not expose Postgres on the host.
