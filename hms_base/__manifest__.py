@@ -22,8 +22,8 @@ groups.
         "views/hms_specialization_views.xml",
         "views/hr_employee_views.xml",
         "views/res_partner_views.xml",
-        "views/hms_menus.xml",
         "wizard/create_staff_wizard_views.xml",
+        "views/hms_menus.xml",
     ],
     "application": True,
     "demo": [
