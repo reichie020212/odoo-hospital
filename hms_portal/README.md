@@ -28,6 +28,14 @@ odoo-bin -d <db> -i hms_portal --stop-after-init
 
 After install, create a portal user for a patient: go to **Settings > Users**, create a user with the patient's `res.partner` as the linked partner, and assign the **Portal** access rights. The patient can then log in at `/my`.
 
+## Demo data
+
+Loaded only when the database has demo data enabled. Provides one ready-to-use patient portal login linked to Maria Santos (`hms_base.demo_patient_maria`). For tester databases ONLY — never use on real prod.
+
+| Login | Password | Group | Linked partner |
+|---|---|---|---|
+| `hms_patient` | `hms_patient` | Portal | Maria Santos |
+
 ## Known limitations
 
 - View-only: patients cannot request, reschedule, or cancel appointments from the portal.

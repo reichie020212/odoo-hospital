@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ============================================================
+         Demo Patient Portal Login
+         Login: hms_patient / Password: hms_patient
+         Linked to res.partner Maria Santos (hms_base.demo_patient_maria)
+         so the portal user sees Maria's appointments and consultations.
+         For tester databases ONLY — never use these on real prod.
+         ============================================================ -->
+    <record id="demo_user_patient" model="res.users">
+        <field name="partner_id" ref="hms_base.demo_patient_maria"/>
+        <field name="login">hms_patient</field>
+        <field name="password">hms_patient</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_portal')])]"/>
+    </record>
+</odoo>

@@ -78,15 +78,50 @@
     </record>
 
     <!-- ============================================================
-         Demo Non-Admin User
-         Login: hms_demo / Password: hms_demo
-         Hospital User (non-manager) — for testers and viewers.
+         Demo Login Accounts
+         All passwords match their login (e.g. hms_demo / hms_demo).
+         For tester databases ONLY — never use these on real prod.
          ============================================================ -->
+
+    <!-- Generic non-admin tester (no employee link) -->
     <record id="demo_user_tester" model="res.users">
         <field name="name">Hospital Demo User</field>
         <field name="login">hms_demo</field>
         <field name="password">hms_demo</field>
         <field name="email">hms_demo@example.com</field>
         <field name="group_ids" eval="[(6, 0, [ref('hms_base.group_hms_user')])]"/>
+    </record>
+
+    <!-- Doctor login — Dr. Michael Lee (General Practitioner) -->
+    <record id="demo_user_doctor" model="res.users">
+        <field name="name">Dr. Michael Lee</field>
+        <field name="login">hms_doctor</field>
+        <field name="password">hms_doctor</field>
+        <field name="email">hms_doctor@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('hms_base.group_hms_user')])]"/>
+    </record>
+    <record id="demo_doctor_lee" model="hr.employee">
+        <field name="user_id" ref="demo_user_doctor"/>
+    </record>
+
+    <!-- Nurse login — Patricia Reyes (Head Nurse) -->
+    <record id="demo_user_nurse" model="res.users">
+        <field name="name">Patricia Reyes</field>
+        <field name="login">hms_nurse</field>
+        <field name="password">hms_nurse</field>
+        <field name="email">hms_nurse@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('hms_base.group_hms_user')])]"/>
+    </record>
+    <record id="demo_nurse_reyes" model="hr.employee">
+        <field name="user_id" ref="demo_user_nurse"/>
+    </record>
+
+    <!-- Manager login — full Hospital Manager privileges -->
+    <record id="demo_user_manager" model="res.users">
+        <field name="name">Hospital Demo Manager</field>
+        <field name="login">hms_manager</field>
+        <field name="password">hms_manager</field>
+        <field name="email">hms_manager@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('hms_base.group_hms_manager')])]"/>
     </record>
 </odoo>
