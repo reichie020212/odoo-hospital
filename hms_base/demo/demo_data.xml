@@ -76,4 +76,17 @@
         <field name="is_nurse" eval="True"/>
         <field name="job_title">Head Nurse</field>
     </record>
+
+    <!-- ============================================================
+         Demo Non-Admin User
+         Login: hms_demo / Password: hms_demo
+         Hospital User (non-manager) — for testers and viewers.
+         ============================================================ -->
+    <record id="demo_user_tester" model="res.users">
+        <field name="name">Hospital Demo User</field>
+        <field name="login">hms_demo</field>
+        <field name="password">hms_demo</field>
+        <field name="email">hms_demo@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('hms_base.group_hms_user')])]"/>
+    </record>
 </odoo>

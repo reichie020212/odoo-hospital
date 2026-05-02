@@ -41,6 +41,13 @@ Foundation module for the Hospital Management System. Extends `res.partner` with
 - Sequence `hms.patient.ref` (`P/YYYY/#####`).
 - Seed specializations: General Medicine, Pediatrics, Cardiology, Obstetrics & Gynecology, Orthopedics, Dermatology.
 
+### Demo data
+
+Loaded only when the database has demo data enabled. Includes patients, doctors, a nurse, and a non-admin login for testers and viewers:
+
+- **Login:** `hms_demo` / **Password:** `hms_demo`
+- Group: Hospital / User (no manager or admin privileges).
+
 ## Dependencies
 
 `contacts`, `hr`, `mail` — all Odoo 19 Community.
