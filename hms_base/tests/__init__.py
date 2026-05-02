@@ -1,5 +1,6 @@
 from . import (
     test_create_staff_wizard,
+    test_demo_data,
     test_employee,
     test_manifest_loading,
     test_patient,
