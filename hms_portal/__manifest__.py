@@ -16,5 +16,8 @@ consultations (with vitals and prescriptions), and lab requests.  Read-only
         "security/ir.model.access.csv",
         "views/portal_templates.xml",
     ],
+    "demo": [
+        "demo/demo_data.xml",
+    ],
     "installable": True,
 }
