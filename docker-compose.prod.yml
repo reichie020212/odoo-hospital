@@ -12,3 +12,22 @@ services:
       - odoo
       - --config=/etc/odoo/odoo.conf
       - --workers=2
+      # --proxy-mode is required when Odoo sits behind a reverse proxy.
+      # It tells Odoo to trust the X-Forwarded-* headers nginx sets so
+      # that absolute URLs (emails, OAuth callbacks, the website) come
+      # out with the correct scheme and host.
+      - --proxy-mode
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      - odoo
+    ports:
+      # Public entry point. If your upstream (Cloudflare / load balancer)
+      # currently points at the prod host's port 8069, switch it to 80
+      # after this service is up. To run alongside another service on
+      # port 80, change the left side (e.g. "8088:80").
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
