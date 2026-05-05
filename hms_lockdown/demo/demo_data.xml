@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- This module enforces a security policy and intentionally adds no
+         demo records. The hospital-staff and patient demo logins from
+         hms_base and hms_portal demonstrate the policy: when this module
+         is installed, those non-admin demo users can no longer change
+         their own passwords. -->
+</odoo>

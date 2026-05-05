@@ -24,6 +24,9 @@ COPY --chown=odoo:odoo hms_insurance        /mnt/extra-addons/odoo-hospital/hms_
 # Public website
 COPY --chown=odoo:odoo hms_website          /mnt/extra-addons/odoo-hospital/hms_website
 
+# Security policy (admin-only password management)
+COPY --chown=odoo:odoo hms_lockdown         /mnt/extra-addons/odoo-hospital/hms_lockdown
+
 # Config
 COPY --chown=odoo:odoo odoo.conf            /etc/odoo/odoo.conf
 

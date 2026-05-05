@@ -19,6 +19,7 @@ Hospital Management System for **Odoo 19 Community Edition** — 12 custom addon
 10. `hms_lab_billing` — bridge: lab tests → sale.order *(auto-install)*.
 11. `hms_pharmacy_billing` — bridge: dispensed medicines → sale.order *(auto-install)*.
 12. `hms_insurance` — insurance policies, co-pay split billing.
+13. `hms_lockdown` — security policy: only Settings admins can manage user passwords; disables the public reset-password flow.
 
 **Infrastructure:** Docker Compose (dev + prod), PostgreSQL 16, 140+ Odoo TransactionCase tests.
 
