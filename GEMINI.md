@@ -155,6 +155,9 @@ All Markdown documentation is organized under the `docs/` directory, following a
 9. **`longpolling_port` removed — use `gevent_port`.**
    Odoo 19 dropped the `longpolling_port` config key; the long-polling/websocket worker now binds to `gevent_port` (default `8072`). Blueprints must specify `gevent_port` in `odoo.conf` (never `longpolling_port`), and any reverse-proxy guidance should forward `/websocket` (and `/longpolling/` for back-compat) to that port. Setting `longpolling_port` in Odoo 19 is silently ignored and breaks live chat / bus notifications.
 
+10. **Form chatter — use the `<chatter/>` tag, not the legacy `oe_chatter` div.**
+    The Odoo 17/18 idiom of `<div class="oe_chatter">` containing raw `message_follower_ids`, `activity_ids`, and `message_ids` fields no longer renders as a chatter widget in Odoo 19 — each field appears as a separate raw editable list, breaking the form (scrollbar shifts to the left, empty bands appear). Blueprints that introduce `mail.thread` / `mail.activity.mixin` on a model must specify a single self-closing `<chatter/>` tag in the form arch, placed after `</sheet>` and inside `<form>`. Do not list the chatter fields explicitly — `<chatter/>` pulls them from the mixins.
+
 ## Project Quirks
 - **Venv**: The canonical virtual environment is located in `.venv/`.
 - A legacy `main.py` placeholder exists at the repo root from the initial scaffold. It is not used by any module.
