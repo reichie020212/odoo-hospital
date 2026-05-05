@@ -166,6 +166,9 @@ These differ from Odoo 17/18 and most online tutorials. Always follow these patt
 9. **`longpolling_port` removed — use `gevent_port`.**
    Odoo 19 dropped the `longpolling_port` config key entirely; the long-polling/websocket worker now binds to `gevent_port` (default `8072`). In `odoo.conf` use `gevent_port = 8072`, not `longpolling_port`. Reverse-proxy configs that forwarded `/longpolling/` should now forward `/websocket` (and `/longpolling/` for back-compat) to the same `gevent_port`. Setting `longpolling_port` in Odoo 19 is silently ignored and breaks live chat / bus notifications.
 
+10. **Form chatter — use the `<chatter/>` tag, not the legacy `oe_chatter` div.**
+    The Odoo 17/18 idiom of placing `<div class="oe_chatter">` with raw `<field name="message_follower_ids"/>`, `<field name="activity_ids"/>`, and `<field name="message_ids"/>` no longer renders as a chatter widget in Odoo 19 — instead each field appears as a separate raw editable list, breaking the form layout (scrollbar shifts to the left, large empty bands of unused fields appear). In Odoo 19 always use a single self-closing `<chatter/>` tag placed *after* the closing `</sheet>` and *inside* `<form>`. Do not declare `message_follower_ids` / `activity_ids` / `message_ids` in the form arch — the `<chatter/>` widget pulls them automatically from the `mail.thread` / `mail.activity.mixin` mixins.
+
 ## Known quirks
 
 - The canonical venv is `.venv/`, which `.gitignore` already covers.
