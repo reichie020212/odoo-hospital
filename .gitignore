@@ -211,3 +211,6 @@ docs/plan/
 
 # Git worktrees for isolated feature work
 .worktrees/
+
+# Local-only docker compose overrides (per-developer, do not commit)
+docker-compose.local.yml
