@@ -27,4 +27,12 @@
         <field name="website_published" eval="True"/>
         <field name="website_description">&lt;p&gt;Stay protected with our vaccination services. We offer routine immunizations for all ages, including flu shots, COVID-19 boosters, and travel vaccinations.&lt;/p&gt;</field>
     </record>
+
+    <!-- Extend the near-admin demo user with Website Editor & Designer rights
+         so the program admin can publish doctors, services, and pages. -->
+    <record id="hms_base.demo_user_admin" model="res.users">
+        <field name="group_ids" eval="[
+            (4, ref('website.group_website_designer')),
+        ]"/>
+    </record>
 </odoo>

@@ -72,3 +72,30 @@ class TestHmsDemoData(TransactionCase):
             user.has_group("base.group_system"),
             "Hospital Manager is application-level — not a system administrator.",
         )
+
+    # --- Near-admin login (hms_admin) ---------------------------------------------
+
+    def test_demo_user_admin_exists(self):
+        user = self._ref("hms_base.demo_user_admin")
+        self.assertEqual(user.login, "hms_admin")
+        self.assertEqual(user.name, "Hospital Demo Admin")
+
+    def test_demo_user_admin_has_broad_manager_access(self):
+        user = self._ref("hms_base.demo_user_admin")
+        self.assertTrue(user.has_group("hms_base.group_hms_manager"))
+        self.assertTrue(user.has_group("hr.group_hr_manager"))
+        self.assertTrue(user.has_group("base.group_partner_manager"))
+
+    def test_demo_user_admin_has_no_settings_or_apps_access(self):
+        # The whole point of this account: an "admin-like" user without the
+        # Settings menu, the Apps installer, or the partial Settings access
+        # that base.group_erp_manager (Administration / Access Rights) grants.
+        user = self._ref("hms_base.demo_user_admin")
+        self.assertFalse(
+            user.has_group("base.group_system"),
+            "demo_user_admin must not have base.group_system (Settings/Apps).",
+        )
+        self.assertFalse(
+            user.has_group("base.group_erp_manager"),
+            "demo_user_admin must not have base.group_erp_manager (Administration).",
+        )

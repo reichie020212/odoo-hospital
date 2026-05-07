@@ -4,4 +4,13 @@
          hms_clinical have appointments with billing products. Users can click
          "Create Invoice Draft" on the completed consultations to see billing
          in action. No pre-created SOs — this keeps the demo interactive. -->
+
+    <!-- Extend the near-admin demo user with Sales + Accounting administrator
+         rights so the program admin can manage SOs and invoices end-to-end. -->
+    <record id="hms_base.demo_user_admin" model="res.users">
+        <field name="group_ids" eval="[
+            (4, ref('sales_team.group_sale_manager')),
+            (4, ref('account.group_account_manager')),
+        ]"/>
+    </record>
 </odoo>

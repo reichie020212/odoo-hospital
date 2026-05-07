@@ -14,4 +14,12 @@
     <!-- Demo data for dispensing is implicit: users can click "Dispense"
          on completed consultations with prescriptions. No pre-created
          pickings — this keeps the demo interactive. -->
+
+    <!-- Extend the near-admin demo user with Inventory administrator rights
+         so the program admin can manage stock, pickings, and product expiry. -->
+    <record id="hms_base.demo_user_admin" model="res.users">
+        <field name="group_ids" eval="[
+            (4, ref('stock.group_stock_manager')),
+        ]"/>
+    </record>
 </odoo>

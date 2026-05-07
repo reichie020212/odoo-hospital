@@ -45,12 +45,13 @@ Foundation module for the Hospital Management System. Extends `res.partner` with
 
 Loaded only when the database has demo data enabled. Includes patients, doctors, a nurse, and four backend login accounts so testers can sign in as each persona. **All passwords match the login** — for tester databases ONLY, never use these on real prod.
 
-| Login | Password | Group | Linked employee/partner |
+| Login | Password | Groups | Linked employee/partner |
 |---|---|---|---|
 | `hms_demo` | `hms_demo` | Hospital / User | — |
 | `hms_doctor` | `hms_doctor` | Hospital / User | `hr.employee` Dr. Michael Lee |
 | `hms_nurse` | `hms_nurse` | Hospital / User | `hr.employee` Patricia Reyes |
 | `hms_manager` | `hms_manager` | Hospital / Manager | — |
+| `hms_admin` | `hms_admin` | "Program admin" — full app-level manager rights (Hospital / HR / Contacts here, plus Sales + Accounting from `hms_billing`, Inventory from `hms_pharmacy`, Website Designer from `hms_website`); **no** Settings menu, **no** Apps menu | — |
 
 A patient portal login (`hms_patient`) is provided by the `hms_portal` module's demo data.
 

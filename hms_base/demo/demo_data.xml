@@ -124,4 +124,20 @@
         <field name="email">hms_manager@example.com</field>
         <field name="group_ids" eval="[(6, 0, [ref('hms_base.group_hms_manager')])]"/>
     </record>
+
+    <!-- Near-admin login — broad app-level manager access, but no Settings/Apps.
+         Mirrors what a real hospital "operations admin" sees: full Hospital,
+         HR and Contacts management, without base.group_system (which would
+         expose the Settings menu and the Apps installer). -->
+    <record id="demo_user_admin" model="res.users">
+        <field name="name">Hospital Demo Admin</field>
+        <field name="login">hms_admin</field>
+        <field name="password">hms_admin</field>
+        <field name="email">hms_admin@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [
+            ref('hms_base.group_hms_manager'),
+            ref('hr.group_hr_manager'),
+            ref('base.group_partner_manager'),
+        ])]"/>
+    </record>
 </odoo>
